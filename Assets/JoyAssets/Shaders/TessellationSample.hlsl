@@ -450,7 +450,7 @@ float3 GenerateNormalFromHeightMap(float2 uv) {
     float right = SampleHeight(uv + float2(_MainTexture_TexelSize.x, 0));
     float down = SampleHeight(uv - float2(0, _MainTexture_TexelSize.y));
     float up = SampleHeight(uv + float2(0, _MainTexture_TexelSize.y));
-
+    
     // Generate a tangent space normal using the slope along the U and V axes
     float3 normalTS = float3((left - right) / (_MainTexture_TexelSize.x * 2), (down - up) / (_MainTexture_TexelSize.y * 2), 1);
 
