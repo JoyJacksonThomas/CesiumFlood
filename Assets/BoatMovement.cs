@@ -24,6 +24,13 @@ public class BoatMovement : MonoBehaviour
     Vector3 currentAngle;
     Quaternion _relativeTo;
 
+    public AudioSource EngineAudio;
+    public float topSpeed;
+
+    public ParticleSystem backSplash;
+
+    public bool motorSubmerged = false;
+    public Vector3 particleRestingQuaternion, particleMovingQuaternion;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +63,30 @@ public class BoatMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump"))
             rb.AddForce(new Vector3(0, jumpForce, 0) * moveForce, ForceMode.Impulse);
+        
+        EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.velocity.magnitude/ topSpeed);
+        //backSplash.emission.rateOverTimeMultiplier = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
+        //backSplash.emissionRate = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
+        backSplash.startSpeed = Mathf.Lerp(2f, 0, rb.velocity.magnitude / topSpeed);
+        backSplash.startSize = Mathf.Lerp(1f, 4, rb.velocity.magnitude / topSpeed);
+        backSplash.startLifetime = Mathf.Lerp(.8f, .4f, rb.velocity.magnitude / topSpeed);
+        backSplash.gravityModifier = Mathf.Lerp(.6f, .3f, rb.velocity.magnitude / topSpeed);
+        backSplash.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(particleRestingQuaternion), Quaternion.Euler(particleMovingQuaternion), rb.velocity.magnitude / topSpeed *10 );
+
+        if (Motor.submerged && !backSplash.isPlaying)
+        {
+            backSplash.Play();
+        }
+        else if (!Motor.submerged && backSplash.isPlaying)
+        {
+            backSplash.Stop();
+        }
+        
+    }
+
+    private void LateUpdate()
+    {
+        motorSubmerged = Motor.submerged;
     }
 
     private void FixedUpdate()
