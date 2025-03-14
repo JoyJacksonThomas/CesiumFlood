@@ -57,6 +57,8 @@ public class TPS_CameraController : MonoBehaviour
 {
     public Transform target;
 
+    public float sensitivity;
+
     public float rotationX = 0f;
     public float rotationY = 0f;
     public float rotationZ = 0f;
@@ -88,6 +90,8 @@ public class TPS_CameraController : MonoBehaviour
     public float maxDeltaPosition;
     public float maxDeltaRotation;
 
+    
+
     void Start()
     {
         originalRotation = transform.localRotation;
@@ -96,14 +100,21 @@ public class TPS_CameraController : MonoBehaviour
         {
             zOffSetQueue[i] = zOffset;
         }
+        Cursor.visible = false;
     }
     void Update()
     {
+        Cursor.visible = false;
         transform.position = Vector3.MoveTowards(transform.position, target.position + new Vector3(0, 1.8f, 0), Time.deltaTime * maxDeltaPosition);
 
         transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotationX, rotationY, rotationZ), Time.deltaTime * maxDeltaRotation);
+
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
+
+        AddRotation(mouseY, mouseX, 0);
     }
 
     void FixedUpdate()
@@ -155,7 +166,7 @@ public class TPS_CameraController : MonoBehaviour
 
     }
 
-    public void AddRotation(float x, float y, float z, float sensitivity)
+    public void AddRotation(float x, float y, float z)
     {
         rotationX += x * sensitivity * Time.deltaTime;
         rotationY += y * sensitivity * Time.deltaTime;

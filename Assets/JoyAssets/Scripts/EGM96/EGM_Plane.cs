@@ -6,7 +6,8 @@ using Unity.Mathematics;
 
 public class EGM_Plane : MonoBehaviour
 {
-    public float waterHeight;
+    public float waterHeight = 0;
+    double undulation = 0;
 
     public GameObject EGM96_Tracer;
 
@@ -19,12 +20,15 @@ public class EGM_Plane : MonoBehaviour
     Vector3[] verts;
     Vector3[] vertDirections;
 
-    bool foundCenter = false;
+    public bool foundCenter = false;
+
+    CesiumGlobeAnchor globeAnchor;
 
     private void Start()
     {
         meshFilter = GetComponent<MeshFilter>();
 
+        globeAnchor = GetComponent<CesiumGlobeAnchor>();
 
         verts = meshFilter.mesh.vertices;
         vertDirections = new Vector3[verts.Length];
@@ -32,6 +36,8 @@ public class EGM_Plane : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (updateUndulation)
         {
             Vector3 worldPt;
@@ -47,10 +53,12 @@ public class EGM_Plane : MonoBehaviour
     {
         if (updateUndulation)
         {
+            GetComponent<CesiumGlobeAnchor>().rotationEastUpNorth = Quaternion.Euler(-90, 0, 0);
             EGM96_Tracer.GetComponent<GeoidHeightsDotNet.EGM96_Positioner>().UpdateUndulation();
             
             if(foundCenter == false)
             {
+                undulation = EGM96_Tracer.GetComponent<CesiumGlobeAnchor>().longitudeLatitudeHeight.z;
                 transform.position = EGM96_Tracer.transform.position;
                 foundCenter = true;
                 return;
@@ -67,7 +75,14 @@ public class EGM_Plane : MonoBehaviour
             {
                 meshFilter.mesh.vertices = verts;
                 updateUndulation = false;
+                currentVertIndex = 0;
+                foundCenter = false;
             }
         }
+        else
+        {
+            globeAnchor.longitudeLatitudeHeight = new double3(globeAnchor.longitudeLatitudeHeight.x, globeAnchor.longitudeLatitudeHeight.y, (undulation + waterHeight));
+        }
+        
     }
 }

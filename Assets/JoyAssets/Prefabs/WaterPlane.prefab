@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3521092199368999368}
   - component: {fileID: 8275904254852077843}
   - component: {fileID: 8500818145320318013}
-  - component: {fileID: 5726054306544115753}
   - component: {fileID: 1941578681093831161}
   m_Layer: 4
   m_Name: WaterPlane
@@ -139,31 +138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70fbd705c1fed4942a41bb87f087ddde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterHeight: 500
+  waterHeight: 30
   EGM96_Tracer: {fileID: 0}
   updateUndulation: 0
   currentVertIndex: 0
---- !u!114 &5726054306544115753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3161633296063527926}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4187e6f23b85ec4eaf2cde9d1b1e19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextureWidth: 10
-  TextureHeight: 10
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  mat: {fileID: 2100000, guid: a094bfbfa973f7641831ed31163dab08, type: 2}
-  WaterMask: {fileID: 0}
-  testX: 0
-  testY: 0
+  foundCenter: 0
 --- !u!64 &1941578681093831161
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -181,7 +160,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30

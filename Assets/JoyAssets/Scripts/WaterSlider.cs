@@ -7,11 +7,8 @@ using Unity.Mathematics;
 using TMPro;
 public class WaterSlider : MonoBehaviour
 {
-    public GameObject WaterBoxVolume;
-    
-    CesiumGlobeAnchor waterAnchor;
+    public WaterPlaneSpawner waterSpawner;
     Slider waterLevelSlider;
-    float halfVolumeHeight;
 
     public float CurrentWaterHeight;
     public float[] WaterHeights;
@@ -26,8 +23,6 @@ public class WaterSlider : MonoBehaviour
     void Awake()
     {
         waterLevelSlider = GetComponent<Slider>();
-        halfVolumeHeight = WaterBoxVolume.transform.localScale.y / 2f;
-        waterAnchor = WaterBoxVolume.GetComponent<CesiumGlobeAnchor>();
         UpdateSliderValue();
     }
 
@@ -70,9 +65,7 @@ public class WaterSlider : MonoBehaviour
 
     public void UpdateWaterHeight()
     {
-        waterAnchor.longitudeLatitudeHeight = new double3(waterAnchor.longitudeLatitudeHeight.x,
-                                                            waterAnchor.longitudeLatitudeHeight.y,
-                                                            -halfVolumeHeight + CurrentWaterHeight);
+        waterSpawner.WaterHeight = CurrentWaterHeight;
     }
 
     void UpdateSliderValue()

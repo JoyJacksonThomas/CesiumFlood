@@ -102,7 +102,7 @@ public class TPS_Player_NEW : MonoBehaviour
         mouseX = player.GetAxis("LookHorizontal");
         mouseY = player.GetAxis("LookVertical");
 
-        CameraController.AddRotation(-mouseY, mouseX, 0, LookSensitivity);
+        CameraController.AddRotation(-mouseY, mouseX, 0);
 
         Controller.Move(Vector3.up * verticalVelocity * Time.deltaTime);
 

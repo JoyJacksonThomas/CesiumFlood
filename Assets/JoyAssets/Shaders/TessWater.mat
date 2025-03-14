@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TessWater
+  m_Shader: {fileID: 4800000, guid: 7405930652f020148aaa5a3086c55183, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _GENERATE_NORMALS_HEIGHT
+  - _PARTITIONING_INTEGER
+  - _TESSELLATION_FACTOR_WORLD_WITH_DEPTH
+  - _TESSELLATION_SMOOTHING_BEZIER_QUAD_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _HeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 53b00ac4b7ee2fb4681d46ce396bde98, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BackFaceCullTolerance: 10000
+    - _FrustumCullTolerance: 5000
+    - _GENERATE_NORMALS: 1
+    - _HeightMapAltitude: 4
+    - _NormalStrength: 4.3
+    - _NumWaves: 4
+    - _PARTITIONING: 0
+    - _TESSELLATION_FACTOR: 3
+    - _TESSELLATION_SMOOTHING: 3
+    - _TessellationBias: 0.91
+    - _TessellationFactor: 0.001
+    - _TessellationFactorVColors: 0
+    - _TessellationSmoothing: 1
+    - _TessellationSmoothingVColors: 0
+    - _TimeScale: 28.36
+    - _WaveFrequency: 0.08
+    m_Colors:
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
