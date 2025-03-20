@@ -30,7 +30,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3008
+  m_CustomRenderQueue: 3020
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -83,7 +83,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SplashTex:
-        m_Texture: {fileID: 2800000, guid: 49cafda508819a843951e515d75225f9, type: 3}
+        m_Texture: {fileID: 2800000, guid: ba27a02f93835fc4093193b7dee1abbe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -122,7 +122,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 8
+    - _QueueOffset: 20
     - _ReceiveShadows: 1
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -130,11 +130,21 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
+    - _WaveAmplitude: 2
+    - _WaveAmplitude_1: 1
+    - _WaveAmplitude_2: 0.5
+    - _WaveFrequency: 0.1
+    - _WaveFrequency_1: 0.15
+    - _WaveFrequency_2: 0.4
+    - _WaveScale: 0.2
+    - _WaveSpeed: 1
+    - _WaveSpeed_1: -1
+    - _WaveSpeed_2: -2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _COLOR: {r: 0, g: 0, b: 0, a: 0}
+    - _COLOR: {r: 0.011764706, g: 0.1764706, b: 0.34901962, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

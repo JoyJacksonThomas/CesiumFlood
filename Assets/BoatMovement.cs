@@ -12,7 +12,7 @@ public class BoatMovement : MonoBehaviour
     public float rotationSpeed;
     public float tiltSpeed;
 
-    public Floater Motor;
+    public Floater Motor, LeftSplashFloater, RightSplashFloater;
 
     public Transform[] floaters;
     public Vector3[] restingFloaterPos;
@@ -27,7 +27,8 @@ public class BoatMovement : MonoBehaviour
     public AudioSource EngineAudio;
     public float topSpeed;
 
-    public ParticleSystem backSplash;
+    public ParticleSystem backSplash, leftSplash, rightSplash;
+    ParticleSystem.RotationOverLifetimeModule rotationOverLifetime;
 
     public bool motorSubmerged = false;
     public Vector3 particleRestingQuaternion, particleMovingQuaternion;
@@ -38,6 +39,8 @@ public class BoatMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         _relativeTo = transform.localRotation;
+
+        rotationOverLifetime = backSplash.rotationOverLifetime;
     }
 
     // Update is called once per frame
@@ -46,32 +49,44 @@ public class BoatMovement : MonoBehaviour
         move.x = Input.GetAxis("Horizontal");
         move.y = Input.GetAxis("Vertical");
 
-        if(move.y > 0)
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        float flatSpeed = flatVelocity.magnitude;
+        for (int i = 0; i < floaters.Length; i++)
         {
-            for(int i = 0; i < floaters.Length; i++)
-            {
-                floaters[i].localPosition = Vector3.MoveTowards(floaters[i].localPosition, movingFloaterPos[i], floaterTransitionTime);
-            }
+            floaters[i].localPosition = Vector3.Lerp(restingFloaterPos[i], movingFloaterPos[i], flatSpeed / topSpeed * .25f);
         }
-        else
-        {
-            for (int i = 0; i < floaters.Length; i++)
-            {
-                floaters[i].localPosition = Vector3.MoveTowards(floaters[i].localPosition, restingFloaterPos[i], floaterTransitionTime);
-            }
-        }
+        //if (move.y > 0)
+        //{
+        //    for(int i = 0; i < floaters.Length; i++)
+        //    {
+        //        floaters[i].localPosition = Vector3.MoveTowards(floaters[i].localPosition, movingFloaterPos[i], floaterTransitionTime);
+        //    }
+        //}
+        //else
+        //{
+        //    for (int i = 0; i < floaters.Length; i++)
+        //    {
+        //        floaters[i].localPosition = Vector3.MoveTowards(floaters[i].localPosition, restingFloaterPos[i], floaterTransitionTime);
+        //    }
+        //}
 
-        if(Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
             rb.AddForce(new Vector3(0, jumpForce, 0) * moveForce, ForceMode.Impulse);
         
         EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.velocity.magnitude/ topSpeed);
+
+        
+        rotationOverLifetime.enabled = true;
+        rotationOverLifetime.separateAxes = true;
+
+        rotationOverLifetime.xMultiplier =  move.x *4;
         //backSplash.emission.rateOverTimeMultiplier = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
         //backSplash.emissionRate = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
-        backSplash.startSpeed = Mathf.Lerp(2f, 0, rb.velocity.magnitude / topSpeed);
-        backSplash.startSize = Mathf.Lerp(1f, 4, rb.velocity.magnitude / topSpeed);
-        backSplash.startLifetime = Mathf.Lerp(.8f, .4f, rb.velocity.magnitude / topSpeed);
-        backSplash.gravityModifier = Mathf.Lerp(.6f, .3f, rb.velocity.magnitude / topSpeed);
-        backSplash.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(particleRestingQuaternion), Quaternion.Euler(particleMovingQuaternion), rb.velocity.magnitude / topSpeed *10 );
+        //backSplash.startSpeed = Mathf.Lerp(2f, 0, rb.velocity.magnitude / topSpeed);
+        //backSplash.startSize = Mathf.Lerp(1f, 4, rb.velocity.magnitude / topSpeed);
+        //backSplash.startLifetime = Mathf.Lerp(.8f, .4f, rb.velocity.magnitude / topSpeed);
+        //backSplash.gravityModifier = Mathf.Lerp(.6f, .3f, rb.velocity.magnitude / topSpeed);
+        //backSplash.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(particleRestingQuaternion), Quaternion.Euler(particleMovingQuaternion), rb.velocity.magnitude / topSpeed *10 );
 
         if (Motor.submerged && !backSplash.isPlaying)
         {
@@ -81,7 +96,32 @@ public class BoatMovement : MonoBehaviour
         {
             backSplash.Stop();
         }
-        
+        //if (Motor.submerged && !ripples.isPlaying)
+        //{
+        //    ripples.Play();
+        //}
+        //else if (!Motor.submerged && ripples.isPlaying)
+        //{
+        //    ripples.Stop();
+        //}
+
+        if (LeftSplashFloater.submerged && !leftSplash.isPlaying)
+        {
+            leftSplash.Play();
+        }
+        else if (!LeftSplashFloater.submerged && leftSplash.isPlaying)
+        {
+            leftSplash.Stop();
+        }
+
+        if (RightSplashFloater.submerged && !rightSplash.isPlaying)
+        {
+            rightSplash.Play();
+        }
+        else if (!RightSplashFloater.submerged && rightSplash.isPlaying)
+        {
+            rightSplash.Stop();
+        }
     }
 
     private void LateUpdate()
