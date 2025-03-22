@@ -31,6 +31,7 @@ Shader "Unlit/RippleShader"
 
             sampler2D _PrevRT;
             sampler2D _CurrentRT;
+            sampler2D _ObjectsRT;
             float4 _CurrentRT_TexelSize;
 
             v2f vert (appdata v)
@@ -47,6 +48,7 @@ Shader "Unlit/RippleShader"
                 float2 uv = i.uv;
                 float speed = 1.0f;
 
+
                 float p10 = tex2D(_CurrentRT, uv - e.zy * speed).x;
                 float p01 = tex2D(_CurrentRT, uv - e.xz * speed).x;
                 float p21 = tex2D(_CurrentRT, uv + e.xz * speed).x;
@@ -56,7 +58,11 @@ Shader "Unlit/RippleShader"
 
                 float d = (p10 + p01 + p21 + p12)/2 - p11;
                 d *= 0.99f;
-                return d;
+                //return d;
+
+                //float foam = tex2D(_ObjectsRT, uv).y;
+                return float4(d, 0, 0, 0);
+                //return tex2D(_ObjectsRT, uv);
             }
             ENDCG
         }

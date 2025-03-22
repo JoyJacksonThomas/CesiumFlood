@@ -136,6 +136,7 @@ Material:
     - _WaveFrequency: 0.1
     - _WaveFrequency_1: 0.15
     - _WaveFrequency_2: 0.4
+    - _WaveOffset: 0.8
     - _WaveScale: 0.2
     - _WaveSpeed: 1
     - _WaveSpeed_1: -1

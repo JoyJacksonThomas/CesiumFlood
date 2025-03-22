@@ -12,7 +12,7 @@ public class BoatMovement : MonoBehaviour
     public float rotationSpeed;
     public float tiltSpeed;
 
-    public Floater Motor, LeftSplashFloater, RightSplashFloater;
+    public Floater Motor, LeftSplashFloater, RightSplashFloater, CenterFloater;
 
     public Transform[] floaters;
     public Vector3[] restingFloaterPos;
@@ -27,7 +27,7 @@ public class BoatMovement : MonoBehaviour
     public AudioSource EngineAudio;
     public float topSpeed;
 
-    public ParticleSystem backSplash, leftSplash, rightSplash;
+    public ParticleSystem backSplash, leftSplash, rightSplash, mainFoam, engineFoam, ripples;
     ParticleSystem.RotationOverLifetimeModule rotationOverLifetime;
 
     public bool motorSubmerged = false;
@@ -88,7 +88,7 @@ public class BoatMovement : MonoBehaviour
         //backSplash.gravityModifier = Mathf.Lerp(.6f, .3f, rb.velocity.magnitude / topSpeed);
         //backSplash.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(particleRestingQuaternion), Quaternion.Euler(particleMovingQuaternion), rb.velocity.magnitude / topSpeed *10 );
 
-        if (Motor.submerged && !backSplash.isPlaying)
+        if (Motor.submerged && !backSplash.isPlaying && move.y > 0)
         {
             backSplash.Play();
         }
@@ -96,7 +96,23 @@ public class BoatMovement : MonoBehaviour
         {
             backSplash.Stop();
         }
-        //if (Motor.submerged && !ripples.isPlaying)
+        if (Motor.submerged && !engineFoam.isPlaying)
+        {
+            engineFoam.Play();
+        }
+        else if (!Motor.submerged && engineFoam.isPlaying)
+        {
+            engineFoam.Stop();
+        }
+        if ((CenterFloater.submerged || Motor.submerged) && !mainFoam.isPlaying && move.y > 0)
+        {
+            mainFoam.Play();
+        }
+        else if (!CenterFloater.submerged && Motor.submerged && mainFoam.isPlaying)
+        {
+            mainFoam.Stop();
+        }
+        //if (Motor.submerged && !ripples.isPlaying && move.y > 0)
         //{
         //    ripples.Play();
         //}
@@ -105,23 +121,23 @@ public class BoatMovement : MonoBehaviour
         //    ripples.Stop();
         //}
 
-        if (LeftSplashFloater.submerged && !leftSplash.isPlaying)
-        {
-            leftSplash.Play();
-        }
-        else if (!LeftSplashFloater.submerged && leftSplash.isPlaying)
-        {
-            leftSplash.Stop();
-        }
-
-        if (RightSplashFloater.submerged && !rightSplash.isPlaying)
-        {
-            rightSplash.Play();
-        }
-        else if (!RightSplashFloater.submerged && rightSplash.isPlaying)
-        {
-            rightSplash.Stop();
-        }
+        //if (LeftSplashFloater.submerged && !leftSplash.isPlaying)
+        //{
+        //    leftSplash.Play();
+        //}
+        //else if (!LeftSplashFloater.submerged && leftSplash.isPlaying)
+        //{
+        //    leftSplash.Stop();
+        //}
+        //
+        //if (RightSplashFloater.submerged && !rightSplash.isPlaying)
+        //{
+        //    rightSplash.Play();
+        //}
+        //else if (!RightSplashFloater.submerged && rightSplash.isPlaying)
+        //{
+        //    rightSplash.Stop();
+        //}
     }
 
     private void LateUpdate()
