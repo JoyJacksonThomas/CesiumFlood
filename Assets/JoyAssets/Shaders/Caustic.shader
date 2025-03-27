@@ -14,6 +14,7 @@ Shader "Example/URPReconstructWorldPos"
         _CausticsMaxStrength("Caustics Max Strength", Float) = 1.0
         _CausticsSplit("Caustics Split", Float) = 0.5
         _CausticsLuminanceMaskStrength("Caustics Luminance Mask Strength", Float) = 0.5
+        _CausticsFadeFactor("Caustics Fade Factor", Float) = 0.5
             //TEXTURE2D(_CausticsTexture);
             //SAMPLER(sampler_CausticsTexture);
     }
@@ -75,6 +76,31 @@ Shader "Example/URPReconstructWorldPos"
         float _CausticsMaxStrength;
         float _CausticsSplit;
         float _CausticsLuminanceMaskStrength;
+        float _CausticsFadeFactor;
+
+        float WaveHeight(float3 posWS)
+        {
+            float waveScale = .2f;
+            float waveAmp1 = 2;
+            float waveAmp2 = 1;
+            float waveAmp3 = .5f;
+            float waveFreq1 = .1f;
+            float waveFreq2 = .15f;
+            float waveFreq3 = .4f;
+            float waveSpeed1 = 1;
+            float waveSpeed2 = -1;
+            float waveSpeed3 = 2;
+
+            float heightX = waveAmp1 * sin(posWS.x * waveFreq1 + _Time.y * waveSpeed1)
+                            + waveAmp2 * sin(posWS.x * waveFreq2 + _Time.y * waveSpeed2)
+                            + waveAmp3 * sin(posWS.x * waveFreq3 + _Time.y * waveSpeed3);
+
+            float heightZ = waveAmp1 * sin(posWS.z * waveFreq1 + _Time.y * waveSpeed1)
+                            + waveAmp2 * sin(posWS.z * waveFreq2 + _Time.y * waveSpeed2)
+                            + waveAmp3 * sin(posWS.z * waveFreq3 + _Time.y * waveSpeed3);
+    
+            return waveScale * (heightX + heightZ);
+        }
 
         half2 Panner(half2 uv, half speed, half tiling)
         {
@@ -147,6 +173,18 @@ Shader "Example/URPReconstructWorldPos"
 
                 // create bounding box mask
                 float boundingBoxMask = all(step(positionOS, 0.5) * (1 - step(positionOS, -0.5)));
+
+                // get the wave height and add that to Mask
+                boundingBoxMask *= step(positionWS.y, WaveHeight(positionWS));
+                boundingBoxMask *= WaveHeight(positionWS) - positionWS.y;
+                boundingBoxMask = clamp(boundingBoxMask, 0, 1);
+
+                // calculate FOG
+                float start = 100.0f;
+                float end = _CausticsFadeFactor;
+                float fogDepth = 1-saturate((end - depth) / (end - start));
+                //float fogDepth = (_CausticsFadeFactor ^ depth)/_CausticsFadeFactor;
+                //boundingBoxMask *= pow(_CausticsFadeFactor, 1 - SampleSceneDepth(positionNDC))/ _CausticsFadeFactor;
 
 
                 // calculate caustics texture UV coordinates (influenced by light direction)

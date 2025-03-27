@@ -88,14 +88,36 @@ public class BoatMovement : MonoBehaviour
         //backSplash.gravityModifier = Mathf.Lerp(.6f, .3f, rb.velocity.magnitude / topSpeed);
         //backSplash.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(particleRestingQuaternion), Quaternion.Euler(particleMovingQuaternion), rb.velocity.magnitude / topSpeed *10 );
 
-        if (Motor.submerged && !backSplash.isPlaying && move.y > 0)
+        //if (Motor.submerged && move.y > 0)
+        //{
+        //    if(!backSplash.isPlaying)
+        //        backSplash.Play();
+        //}
+        //else
+        //{
+        //    if (backSplash.isPlaying)
+        //        backSplash.Stop();
+        //}
+
+        if ((CenterFloater.submerged || Motor.submerged) && move.y != 0)
         {
-            backSplash.Play();
+            if (!backSplash.isPlaying)
+                backSplash.Play();
+            if (!mainFoam.isPlaying)
+                mainFoam.Play();
+            if (!ripples.isPlaying)
+                ripples.Play();
         }
-        else if (!Motor.submerged && backSplash.isPlaying)
+        else
         {
-            backSplash.Stop();
+            if (backSplash.isPlaying)
+                backSplash.Stop();
+            if (mainFoam.isPlaying)
+                mainFoam.Stop();
+            if (ripples.isPlaying)
+                ripples.Stop();
         }
+
         if (Motor.submerged && !engineFoam.isPlaying)
         {
             engineFoam.Play();
@@ -104,14 +126,16 @@ public class BoatMovement : MonoBehaviour
         {
             engineFoam.Stop();
         }
-        if ((CenterFloater.submerged || Motor.submerged) && !mainFoam.isPlaying && move.y > 0)
-        {
-            mainFoam.Play();
-        }
-        else if (!CenterFloater.submerged && Motor.submerged && mainFoam.isPlaying)
-        {
-            mainFoam.Stop();
-        }
+
+        //if ((CenterFloater.submerged || Motor.submerged) && !mainFoam.isPlaying && move.y > 0)
+        //{
+        //    mainFoam.Play();
+        //}
+        //else if (!CenterFloater.submerged && Motor.submerged && mainFoam.isPlaying)
+        //{
+        //    mainFoam.Stop();
+        //}
+
         //if (Motor.submerged && !ripples.isPlaying && move.y > 0)
         //{
         //    ripples.Play();
@@ -142,7 +166,7 @@ public class BoatMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        motorSubmerged = Motor.submerged;
+        motorSubmerged = CenterFloater.submerged;
     }
 
     private void FixedUpdate()

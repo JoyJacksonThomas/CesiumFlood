@@ -30,7 +30,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2999
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -141,7 +141,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
-    - _QueueOffset: 0
+    - _QueueOffset: -1
     - _ReceiveShadows: 1
     - _RefractionScale: -0.08
     - _RefractionSpeed: 0.05
@@ -153,7 +153,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WaterDepth: 15.35
+    - _WaterDepth: 72
     - _WaveAmplitude: 2
     - _WaveAmplitude_1: 1
     - _WaveAmplitude_2: 0.5
@@ -173,8 +173,8 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.13333334}
     - _FoamDirection: {r: 1, g: 1, b: 0, a: 0}
-    - _ShallowWater: {r: 0, g: 0.026579533, b: 0.23921569, a: 1}
+    - _ShallowWater: {r: 0, g: 0.026579533, b: 0.23921564, a: 0.9882353}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _SpecularColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
