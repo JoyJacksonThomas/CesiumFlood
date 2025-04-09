@@ -29,13 +29,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CausticsFadeFactor: 1
+    - _CausticsDepth: 11.29
+    - _CausticsFadeFactor: 0.5
     - _CausticsLuminanceMaskStrength: 1.03
     - _CausticsMaxStrength: 1
     - _CausticsScale: 22.8
     - _CausticsSpeed: 0.07
     - _CausticsSplit: 0.0007
-    - _CausticsStrength: 1
-    m_Colors: []
+    - _CausticsStrength: 9.66
+    - _DeepCausticsScale: 15
+    - _DeepColorDepth: 76.2
+    - _ShallowCausticsScale: 30.5
+    - _ShallowColorDepth: 3.18
+    m_Colors:
+    - _DeepColor: {r: 0.13585797, g: 0.17307219, b: 0.4056604, a: 1}
+    - _ShallowColor: {r: 0.19624421, g: 0.3962264, b: 0.28589138, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

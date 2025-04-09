@@ -9,14 +9,18 @@ Shader "Example/URPReconstructWorldPos"
 
         _CausticsTexture("Caustics Texture", 2D) = "" {}
         _CausticsSpeed("Caustics Speed", Float) = 0.5
-        _CausticsScale("Caustics Scale", Float) = 0.5
+        _ShallowCausticsScale("Shallow Caustics Scale", Float) = 0.5
+        _DeepCausticsScale("Deep Caustics Scale", Float) = 0.5
+        _CausticsDepth("Caustics Depth", Float) = 0.5
         _CausticsStrength("Caustics Strength", Float) = 0.5
         _CausticsMaxStrength("Caustics Max Strength", Float) = 1.0
         _CausticsSplit("Caustics Split", Float) = 0.5
         _CausticsLuminanceMaskStrength("Caustics Luminance Mask Strength", Float) = 0.5
         _CausticsFadeFactor("Caustics Fade Factor", Float) = 0.5
-            //TEXTURE2D(_CausticsTexture);
-            //SAMPLER(sampler_CausticsTexture);
+        _ShallowColor("ShallowColor", Color) = (.25, .5, .5, 1)
+        _ShallowColorDepth("Shallow Color Depth", Float) = 0.5
+        _DeepColor("DeepColor", Color) = (.25, .5, .5, 1)
+        _DeepColorDepth("Deep Color Depth", Float) = 0.5
     }
 
         // The SubShader block containing the Shader code.
@@ -71,12 +75,18 @@ Shader "Example/URPReconstructWorldPos"
         SAMPLER(sampler_CausticsTexture);
 
         float _CausticsSpeed;
-        float _CausticsScale;
+        float _ShallowCausticsScale;
+        float _DeepCausticsScale;
+        float _CausticsDepth;
         float _CausticsStrength;
         float _CausticsMaxStrength;
         float _CausticsSplit;
         float _CausticsLuminanceMaskStrength;
         float _CausticsFadeFactor;
+        float4 _ShallowColor;
+        float _ShallowColorDepth;
+        float4 _DeepColor;
+        float _DeepColorDepth;
 
         float WaveHeight(float3 posWS)
         {
@@ -175,23 +185,36 @@ Shader "Example/URPReconstructWorldPos"
                 float boundingBoxMask = all(step(positionOS, 0.5) * (1 - step(positionOS, -0.5)));
 
                 // get the wave height and add that to Mask
-                boundingBoxMask *= step(positionWS.y, WaveHeight(positionWS));
-                boundingBoxMask *= WaveHeight(positionWS) - positionWS.y;
-                boundingBoxMask = clamp(boundingBoxMask, 0, 1);
+                float waveHeight = WaveHeight(positionWS);
+                float waterHeightMask = step(positionWS.y, waveHeight);
+                waterHeightMask *= WaveHeight(positionWS) - positionWS.y;
+                waterHeightMask = clamp(waterHeightMask, 0, 1);
 
-                // calculate FOG
-                float start = 100.0f;
-                float end = _CausticsFadeFactor;
-                float fogDepth = 1-saturate((end - depth) / (end - start));
-                //float fogDepth = (_CausticsFadeFactor ^ depth)/_CausticsFadeFactor;
-                //boundingBoxMask *= pow(_CausticsFadeFactor, 1 - SampleSceneDepth(positionNDC))/ _CausticsFadeFactor;
+                // calculate the water color gradient based on the depth of the water
+                float4 waterColor = lerp(float4(.0f, .0f, .0f, .0f), _ShallowColor, (waveHeight - positionWS.y)/_ShallowColorDepth) * step(waveHeight - _ShallowColorDepth, positionWS.y);
+                waterColor += lerp(_ShallowColor, _DeepColor, (waveHeight - positionWS.y - _ShallowColorDepth)/_DeepColorDepth) * step(positionWS.y, waveHeight - _ShallowColorDepth);
+                waterColor = clamp(waterColor, .0f, 1.0f);
+                waterColor *= boundingBoxMask;
+                waterColor *= waterHeightMask;
 
+                // calculate the vertical fade based on depth from the water surface
+                float verticalFade = lerp(1.0f, 0.0f, (waveHeight - positionWS.y)/_DeepColorDepth) * step(waveHeight - _DeepColorDepth, positionWS.y);
+                boundingBoxMask *= verticalFade;
+                //waterColor *= verticalFade;
+                
+                // calculate the depth fade factor based on the object space and apply to the boundbox mask and the water color
+                float fogDepth = _CausticsFadeFactor - length(positionOS);
+                boundingBoxMask *= fogDepth;
+                waterColor *= fogDepth;
 
                 // calculate caustics texture UV coordinates (influenced by light direction)
                 half2 uv_caustic = mul(positionWS, _MainLightDirection).xy;
 
-                half2 uv1 = Panner(uv_caustic, 0.75 * _CausticsSpeed, 1 / _CausticsScale);
-                half2 uv2 = Panner(uv_caustic, 1 * _CausticsSpeed, -1 / _CausticsScale);
+                float causticsScale = lerp(_ShallowCausticsScale, _DeepCausticsScale, abs(0 - positionWS.y)/_CausticsDepth);
+                causticsScale = _ShallowCausticsScale;
+
+                half2 uv1 = Panner(uv_caustic, 0.75 * _CausticsSpeed, 1 / causticsScale);
+                half2 uv2 = Panner(uv_caustic, 1 * _CausticsSpeed, -1 / causticsScale);
 
                 // sample the caustics
                 half3 tex1 = SampleCaustics(uv1, _CausticsSplit);
@@ -204,7 +227,13 @@ Shader "Example/URPReconstructWorldPos"
                 half luminanceMask = lerp(1, sceneLuminance, _CausticsLuminanceMaskStrength);
                 //half luminanceMask = smoothstep(_CausticsLuminanceMaskStrength, _CausticsLuminanceMaskStrength + 0.1, sceneLuminance);
 
-                half4 color = half4((caustics.xyz) * boundingBoxMask * luminanceMask, length(caustics.xyz) * boundingBoxMask * luminanceMask);
+                
+
+                half4 color = half4((caustics.xyz) * boundingBoxMask * luminanceMask * waterHeightMask , length(caustics.xyz) * boundingBoxMask * luminanceMask * waterHeightMask);
+
+                
+                //float3 test = float3(_CausticsFadeFactor, _CausticsFadeFactor, _CausticsFadeFactor) - abs(positionOS);
+                
                 //color = float4(positionOS.x, positionOS.y, positionOS.z, 1);
                 //sceneColor *= 20;
                 //color = half4(sceneColor.x, sceneColor.y, sceneColor.z, .01);
