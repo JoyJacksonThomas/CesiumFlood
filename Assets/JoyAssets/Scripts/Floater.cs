@@ -38,12 +38,12 @@ public class Floater : MonoBehaviour
         //float waterHeight = instance.GetHeight(transform.position) ?? transform.position.y;
         float waterHeight = GetWaterHeight();
 
-        submerged = transform.position.y < waterHeight;
+        submerged = transform.position.y < WaterLevelManager.instance.waterLevel + waterHeight;
 
-        if (transform.position.y < waterHeight)
+        if (transform.position.y < WaterLevelManager.instance.waterLevel + waterHeight)
         {
             
-            float displacementMulti = Mathf.Clamp01((waterHeight - transform.position.y) / depthBefSub) * displacementAmt;
+            float displacementMulti = Mathf.Clamp01((WaterLevelManager.instance.waterLevel + waterHeight - transform.position.y) / depthBefSub) * displacementAmt;
 
             rb.AddForceAtPosition(new Vector3(0f, Mathf.Abs(Physics.gravity.y) * displacementMulti, 0f), transform.position, ForceMode.Acceleration);
 
@@ -80,7 +80,7 @@ public class Floater : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-        Gizmos.DrawCube(new Vector3(transform.position.x, GetWaterHeight(), transform.position.z), Vector3.one *.3f);
+        Gizmos.DrawCube(new Vector3(transform.position.x, WaterLevelManager.instance.waterLevel + GetWaterHeight(), transform.position.z), Vector3.one *.3f);
 
     }
 }

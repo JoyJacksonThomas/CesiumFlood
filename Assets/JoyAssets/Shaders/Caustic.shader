@@ -21,6 +21,7 @@ Shader "Example/URPReconstructWorldPos"
         _ShallowColorDepth("Shallow Color Depth", Float) = 0.5
         _DeepColor("DeepColor", Color) = (.25, .5, .5, 1)
         _DeepColorDepth("Deep Color Depth", Float) = 0.5
+        _WaterLevel("Water Level", Float) = 0.0
     }
 
         // The SubShader block containing the Shader code.
@@ -87,6 +88,7 @@ Shader "Example/URPReconstructWorldPos"
         float _ShallowColorDepth;
         float4 _DeepColor;
         float _DeepColorDepth;
+        float _WaterLevel;
 
         float WaveHeight(float3 posWS)
         {
@@ -185,7 +187,7 @@ Shader "Example/URPReconstructWorldPos"
                 float boundingBoxMask = all(step(positionOS, 0.5) * (1 - step(positionOS, -0.5)));
 
                 // get the wave height and add that to Mask
-                float waveHeight = WaveHeight(positionWS);
+                float waveHeight = WaveHeight(positionWS) + _WaterLevel;
                 float waterHeightMask = step(positionWS.y, waveHeight);
                 waterHeightMask *= WaveHeight(positionWS) - positionWS.y;
                 waterHeightMask = clamp(waterHeightMask, 0, 1);

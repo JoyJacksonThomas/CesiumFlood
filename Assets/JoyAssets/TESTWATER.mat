@@ -63,7 +63,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoamNoise:
-        m_Texture: {fileID: 2800000, guid: cdec882b86a6f9b46b4c79d6a9891f1c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 25491f7f72a256e428e968c6a46d5e2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -133,6 +133,7 @@ Material:
     - _FoamCutoff: 17.2
     - _FoamScale: 3534.71
     - _FoamSpeed: 0.5
+    - _FoamTiling: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
