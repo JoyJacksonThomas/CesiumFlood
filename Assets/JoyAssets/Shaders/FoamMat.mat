@@ -30,7 +30,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3020
+  m_CustomRenderQueue: 2020
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -131,7 +131,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WaterLevel: -7.8
+    - _WaterLevel: -2249.51
     - _WaveAmplitude: 2
     - _WaveAmplitude_1: 1
     - _WaveAmplitude_2: 0.5

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rewired.ControllerExtensions;
+//using Rewired.ControllerExtensions;
 using Microsoft.Win32;
 
 public enum MovementState
@@ -12,7 +12,7 @@ public enum MovementState
 public class TPS_Player_NEW : MonoBehaviour
 {
     public CharacterController Controller;
-    public WalkingIK_Script WalkingIK;
+    //public WalkingIK_Script WalkingIK;
     public float maxSpeed, currentSpeed;
     
     public Transform MainCamera;
@@ -24,9 +24,10 @@ public class TPS_Player_NEW : MonoBehaviour
     public float gravityWhileGrounded;
     public float GravityMultiplier;
     float verticalVelocity;
+    public bool grounded;
 
     public int playerId = 0;
-    private Rewired.Player player { get { return Rewired.ReInput.players.GetPlayer(playerId); } }
+    //private Rewired.Player player { get { return Rewired.ReInput.players.GetPlayer(playerId); } }
 
     public Animator Animator;
     [Range(0f, 1f)]
@@ -57,10 +58,10 @@ public class TPS_Player_NEW : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = player.GetAxis("MoveHorizontal");
-        float vertical = player.GetAxis("MoveVertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
         stickDirection = new Vector3(horizontal, 0, vertical);
-        WalkingIK.StickDirection = stickDirection.normalized;
+        //WalkingIK.StickDirection = stickDirection.normalized;
 
         //float currentAnimLength = 
         //Animator.SetFloat("MotionTime", Time.timeSinceLevelLoad % );
@@ -99,10 +100,10 @@ public class TPS_Player_NEW : MonoBehaviour
 
        
 
-        mouseX = player.GetAxis("LookHorizontal");
-        mouseY = player.GetAxis("LookVertical");
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
 
-        CameraController.AddRotation(-mouseY, mouseX, 0);
+        CameraController.AddRotation(mouseY, mouseX, 0);
 
         Controller.Move(Vector3.up * verticalVelocity * Time.deltaTime);
 
@@ -128,7 +129,7 @@ public class TPS_Player_NEW : MonoBehaviour
 
     void ApplyGravity()
     {
-        if(Controller.isGrounded)
+        if(grounded)
         {
             verticalVelocity = gravityWhileGrounded;
         }
@@ -140,6 +141,13 @@ public class TPS_Player_NEW : MonoBehaviour
        
     }
 
+    private void OnCollisionStay(Collision col)
+    {
+        grounded = true;
+    }
+    private void OnCollisionExit(Collision col)
+    {
+        grounded = false;
+    }
 
-    
 }
