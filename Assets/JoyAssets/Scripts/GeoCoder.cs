@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,15 @@ public static class GeoCoder
     // Start is called before the first frame update
    
 
-    public static Vector2 RequestLatLong(string address)
-    {
-        string requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/xml?key={1}&address={0}&sensor=false", System.Uri.EscapeDataString(address), "");
+    public static Vector2 RequestLatLong(string address) {
+
+        string apiKey = Environment.GetEnvironmentVariable("CESIUM_FLOOD_GOOGLE_API_KEY");
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            Debug.LogError("Google API Key is not set. Please set the CESIUM_FLOOD_GOOGLE_API_KEY environment variable.");
+            return Vector2.zero;
+        }
+        string requestUri = string.Format("https://maps.googleapis.com/maps/api/geocode/xml?key={1}&address={0}&sensor=false", System.Uri.EscapeDataString(address), apiKey);
 
         WebRequest request = WebRequest.Create(requestUri);
         WebResponse response = request.GetResponse();

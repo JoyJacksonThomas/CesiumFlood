@@ -183,7 +183,7 @@ public class BoatMovement : MonoBehaviour
 
         transform.localEulerAngles = new Vector3(x, transform.localEulerAngles.y, z);
 
-        transform.RotateAroundLocal(Vector3.up, rotationSpeed * move.x);
+        transform.Rotate(Vector3.up, rotationSpeed * move.x);
 
 
         if(Motor.submerged)
