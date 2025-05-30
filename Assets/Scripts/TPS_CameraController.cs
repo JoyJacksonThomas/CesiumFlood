@@ -48,9 +48,11 @@
 #endregion
 
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class TPS_CameraController : MonoBehaviour
@@ -90,10 +92,11 @@ public class TPS_CameraController : MonoBehaviour
     public float maxDeltaPosition;
     public float maxDeltaRotation;
 
-    
 
     void Start()
     {
+
+
         originalRotation = transform.localRotation;
         zOffset = maxOffSet_Z;
         for (int i = 0; i < 10; i++)
@@ -101,6 +104,11 @@ public class TPS_CameraController : MonoBehaviour
             zOffSetQueue[i] = zOffset;
         }
         Cursor.visible = false;
+    }
+
+    public void OnLook(InputValue value){
+        Vector2 input = value.Get<Vector2>();
+        AddRotation(input.y, input.x, 0);
     }
     void Update()
     {
@@ -110,12 +118,14 @@ public class TPS_CameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotationX, rotationY, rotationZ), Time.deltaTime * maxDeltaRotation);
+        //
+        // float mouseX = Input.GetAxis("Mouse X");
+        // float mouseY = Input.GetAxis("Mouse Y");
 
-        //float mouseX = Input.GetAxis("Mouse X");
-        //float mouseY = Input.GetAxis("Mouse Y");
-
-        //AddRotation(mouseY, mouseX, 0);
+        // AddRotation(mouseY, mouseX, 0);
     }
+
+
 
     void FixedUpdate()
     {

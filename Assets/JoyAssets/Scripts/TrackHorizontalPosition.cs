@@ -15,6 +15,6 @@ public class TrackHorizontalPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(target.transform.position.x, WaterLevelManager.instance.waterLevel, target.transform.position.z);
+        transform.position = new Vector3(target.transform.position.x, WaterLevelManager.Instance.waterLevel, target.transform.position.z);
     }
 }
