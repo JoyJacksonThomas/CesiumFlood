@@ -44,15 +44,15 @@ public class BoatMovement : MonoBehaviour
         rotationOverLifetime = backSplash.rotationOverLifetime;
     }
 
-    public void OnJump(InputValue value) {
+    public void OnJump() {
         // Debug.Log("Jump");
         rb.AddForce(new Vector3(0, jumpForce, 0) * moveForce, ForceMode.Impulse);
     }
 
-    public void OnMove(InputValue value)
+    public void OnMove(Vector2 value)
     {
         // Debug.Log("Move");
-        move = value.Get<Vector2>();
+        move = value;
     }
 
     // Update is called once per frame

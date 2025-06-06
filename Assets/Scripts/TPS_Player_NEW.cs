@@ -55,12 +55,16 @@ public class TPS_Player_NEW : MonoBehaviour
         m_CurrentClipInfo = Animator.GetCurrentAnimatorClipInfo(0);
     }
 
+    public void OnMove(Vector2 input) {
+        stickDirection = new Vector3(input.x, 0, input.y);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        stickDirection = new Vector3(horizontal, 0, vertical);
+        // float horizontal = Input.GetAxis("Horizontal");
+        // float vertical = Input.GetAxis("Vertical");
+
         //WalkingIK.StickDirection = stickDirection.normalized;
 
         //float currentAnimLength = 
@@ -99,11 +103,11 @@ public class TPS_Player_NEW : MonoBehaviour
         }
 
        
-
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
-
-        CameraController.AddRotation(mouseY, mouseX, 0);
+        //
+        // mouseX = Input.GetAxis("Mouse X");
+        // mouseY = Input.GetAxis("Mouse Y");
+        //
+        // CameraController.AddRotation(mouseY, mouseX, 0);
 
         Controller.Move(Vector3.up * verticalVelocity * Time.deltaTime);
 
@@ -112,12 +116,7 @@ public class TPS_Player_NEW : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        
-
-
         ApplyGravity();
-
     }
 
     void UpdateMotionData(float deltaTime)
@@ -137,8 +136,6 @@ public class TPS_Player_NEW : MonoBehaviour
         {
             verticalVelocity += gravity * GravityMultiplier * Time.deltaTime;
         }
-
-       
     }
 
     private void OnCollisionStay(Collision col)

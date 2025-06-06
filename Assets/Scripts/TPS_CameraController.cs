@@ -67,7 +67,7 @@ public class TPS_CameraController : MonoBehaviour
     Quaternion originalRotation;
     public Camera mCamera;
 
-    float oneOver180 = 1f / 180f;
+    // float oneOver180 = 1f / 180f;
 
     public Vector3 Offset = Vector3.zero;
 
@@ -95,8 +95,6 @@ public class TPS_CameraController : MonoBehaviour
 
     void Start()
     {
-
-
         originalRotation = transform.localRotation;
         zOffset = maxOffSet_Z;
         for (int i = 0; i < 10; i++)
@@ -105,8 +103,7 @@ public class TPS_CameraController : MonoBehaviour
         }
     }
 
-    public void OnLook(InputValue value){
-        Vector2 input = value.Get<Vector2>();
+    public void OnLook(Vector2 input){
         AddRotation(input.y, input.x, 0);
     }
     void Update()
@@ -116,12 +113,6 @@ public class TPS_CameraController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotationX, rotationY, rotationZ), Time.deltaTime * maxDeltaRotation);
-        //
-        // float mouseX = Input.GetAxis("Mouse X");
-        // float mouseY = Input.GetAxis("Mouse Y");
-
-        // AddRotation(mouseY, mouseX, 0);
     }
 
 
@@ -177,6 +168,8 @@ public class TPS_CameraController : MonoBehaviour
 
     public void AddRotation(float x, float y, float z)
     {
+        Debug.Log($"Adding rotation: X={x}, Y={y}, Z={z}");
+
         rotationX += x * sensitivity * Time.deltaTime;
         rotationY += y * sensitivity * Time.deltaTime;
         rotationZ += z * sensitivity * Time.deltaTime;
