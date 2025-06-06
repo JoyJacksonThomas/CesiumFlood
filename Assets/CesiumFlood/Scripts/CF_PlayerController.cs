@@ -20,7 +20,7 @@ public class CF_PlayerController : MonoBehaviour {
 
         controls.Player.SelectMovementType.performed += OnChangeMovementType;
 
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
 

@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3941184246529871209}
   - component: {fileID: 3412300615440913001}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: JetSki
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 40
   jumpForce: 0.5
-  rotationSpeed: 0.03
+  rotationSpeed: 1.5
   tiltSpeed: 2
   Motor: {fileID: 5758753396356099856}
   LeftSplashFloater: {fileID: 4561315463399490729}
@@ -25290,7 +25290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1071218305780342564}
-  sensitivity: 820
+  sensitivity: 10
   rotationX: 0
   rotationY: 0
   rotationZ: 0
