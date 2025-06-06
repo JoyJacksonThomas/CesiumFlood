@@ -37,7 +37,7 @@ public class BoatMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponentInChildren<Rigidbody>();
 
         _relativeTo = transform.localRotation;
 

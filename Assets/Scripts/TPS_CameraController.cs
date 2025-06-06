@@ -103,7 +103,6 @@ public class TPS_CameraController : MonoBehaviour
         {
             zOffSetQueue[i] = zOffset;
         }
-        Cursor.visible = false;
     }
 
     public void OnLook(InputValue value){

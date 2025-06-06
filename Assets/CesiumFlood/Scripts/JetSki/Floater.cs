@@ -79,6 +79,10 @@ public class Floater : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        // water level instance doesn't exist before start
+        if (!Application.isPlaying) {
+            return;
+        }
         if (WaterLevelManager.Instance == null)
             return;
         Gizmos.DrawCube(new Vector3(transform.position.x, WaterLevelManager.Instance.waterLevel + GetWaterHeight(), transform.position.z), Vector3.one *.3f);

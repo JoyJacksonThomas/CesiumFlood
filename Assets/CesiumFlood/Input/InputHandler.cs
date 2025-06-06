@@ -17,5 +17,9 @@ namespace CesiumFlood{
         void OnLook(InputValue value) {
             m_CameraController.OnLook(value);
         }
+
+        void OnToggleGUI(InputValue value) {
+            Debug.Log("Toggle GUI");
+        }
     }
 }
