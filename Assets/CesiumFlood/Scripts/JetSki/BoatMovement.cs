@@ -37,7 +37,7 @@ public class BoatMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponentInParent<Rigidbody>();
 
         _relativeTo = transform.localRotation;
 
@@ -171,6 +171,8 @@ public class BoatMovement : MonoBehaviour
         //{
         //    rightSplash.Stop();
         //}
+
+        transform.parent.position = transform.position;
     }
 
     private void LateUpdate()
@@ -199,6 +201,8 @@ public class BoatMovement : MonoBehaviour
             rb.AddForce(flatForward * move.y * moveForce, ForceMode.Acceleration);
         else
             rb.AddForce(flatForward * move.y * moveForce * .3f, ForceMode.Acceleration);
+
+
     }
 
     
