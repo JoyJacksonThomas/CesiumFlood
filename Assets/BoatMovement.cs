@@ -27,7 +27,7 @@ public class BoatMovement : MonoBehaviour
     public AudioSource EngineAudio;
     public float topSpeed;
 
-    public ParticleSystem backSplash, leftSplash, rightSplash, mainFoam, engineFoam, ripples;
+    public ParticleSystem backSplash, leftSplash, rightSplash, mainFoam, surfaceFoam, engineFoam, ripples;
     ParticleSystem.RotationOverLifetimeModule rotationOverLifetime;
 
     public bool motorSubmerged = false;
@@ -107,6 +107,8 @@ public class BoatMovement : MonoBehaviour
                 mainFoam.Play();
             if (!ripples.isPlaying)
                 ripples.Play();
+            if (!surfaceFoam.isPlaying)
+                surfaceFoam.Play();
         }
         else
         {
@@ -116,6 +118,8 @@ public class BoatMovement : MonoBehaviour
                 mainFoam.Stop();
             if (ripples.isPlaying)
                 ripples.Stop();
+            if (surfaceFoam.isPlaying)
+                surfaceFoam.Stop();
         }
 
         if (Motor.submerged && !engineFoam.isPlaying)
@@ -145,23 +149,23 @@ public class BoatMovement : MonoBehaviour
         //    ripples.Stop();
         //}
 
-        //if (LeftSplashFloater.submerged && !leftSplash.isPlaying)
-        //{
-        //    leftSplash.Play();
-        //}
-        //else if (!LeftSplashFloater.submerged && leftSplash.isPlaying)
-        //{
-        //    leftSplash.Stop();
-        //}
-        //
-        //if (RightSplashFloater.submerged && !rightSplash.isPlaying)
-        //{
-        //    rightSplash.Play();
-        //}
-        //else if (!RightSplashFloater.submerged && rightSplash.isPlaying)
-        //{
-        //    rightSplash.Stop();
-        //}
+        if (LeftSplashFloater.submerged && !leftSplash.isPlaying && move.y != 0)
+        {
+            leftSplash.Play();
+        }
+        else if (!LeftSplashFloater.submerged && leftSplash.isPlaying)
+        {
+            leftSplash.Stop();
+        }
+        
+        if (RightSplashFloater.submerged && !rightSplash.isPlaying && move.y != 0)
+        {
+            rightSplash.Play();
+        }
+        else if (!RightSplashFloater.submerged && rightSplash.isPlaying)
+        {
+            rightSplash.Stop();
+        }
     }
 
     private void LateUpdate()

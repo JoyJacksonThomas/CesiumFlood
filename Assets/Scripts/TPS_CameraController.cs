@@ -111,10 +111,10 @@ public class TPS_CameraController : MonoBehaviour
 
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(rotationX, rotationY, rotationZ), Time.deltaTime * maxDeltaRotation);
 
-        //float mouseX = Input.GetAxis("Mouse X");
-        //float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
 
-        //AddRotation(mouseY, mouseX, 0);
+        AddRotation(mouseY, mouseX, 0);
     }
 
     void FixedUpdate()
