@@ -51,6 +51,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CesiumFlood;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -108,7 +109,6 @@ public class TPS_CameraController : MonoBehaviour
     }
     void Update()
     {
-        Cursor.visible = false;
         transform.position = Vector3.MoveTowards(transform.position, target.position + new Vector3(0, 1.8f, 0), Time.deltaTime * maxDeltaPosition);
 
         transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
@@ -119,6 +119,7 @@ public class TPS_CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
+
         rotationX = Mathf.Clamp(rotationX, -65, 90);
         
 

@@ -128,7 +128,7 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""ToggleConfigGUI"",
+                    ""name"": ""ToggleConfigMenu"",
                     ""type"": ""Button"",
                     ""id"": ""8bb225af-2573-4dc2-9094-2799f9b3ced4"",
                     ""expectedControlType"": """",
@@ -370,11 +370,11 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e57fb424-1520-4a32-9fcb-4a98fe395c56"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""ToggleConfigGUI"",
+                    ""action"": ""ToggleConfigMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -384,7 +384,7 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""ToggleMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -977,7 +977,7 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SelectMovementType = m_Player.FindAction("SelectMovementType", throwIfNotFound: true);
-        m_Player_ToggleConfigGUI = m_Player.FindAction("ToggleConfigGUI", throwIfNotFound: true);
+        m_Player_ToggleConfigMenu = m_Player.FindAction("ToggleConfigMenu", throwIfNotFound: true);
         m_Player_ToggleMainMenu = m_Player.FindAction("ToggleMainMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1076,7 +1076,7 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SelectMovementType;
-    private readonly InputAction m_Player_ToggleConfigGUI;
+    private readonly InputAction m_Player_ToggleConfigMenu;
     private readonly InputAction m_Player_ToggleMainMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -1106,9 +1106,9 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SelectMovementType => m_Wrapper.m_Player_SelectMovementType;
         /// <summary>
-        /// Provides access to the underlying input action "Player/ToggleConfigGUI".
+        /// Provides access to the underlying input action "Player/ToggleConfigMenu".
         /// </summary>
-        public InputAction @ToggleConfigGUI => m_Wrapper.m_Player_ToggleConfigGUI;
+        public InputAction @ToggleConfigMenu => m_Wrapper.m_Player_ToggleConfigMenu;
         /// <summary>
         /// Provides access to the underlying input action "Player/ToggleMainMenu".
         /// </summary>
@@ -1151,9 +1151,9 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
             @SelectMovementType.started += instance.OnSelectMovementType;
             @SelectMovementType.performed += instance.OnSelectMovementType;
             @SelectMovementType.canceled += instance.OnSelectMovementType;
-            @ToggleConfigGUI.started += instance.OnToggleConfigGUI;
-            @ToggleConfigGUI.performed += instance.OnToggleConfigGUI;
-            @ToggleConfigGUI.canceled += instance.OnToggleConfigGUI;
+            @ToggleConfigMenu.started += instance.OnToggleConfigMenu;
+            @ToggleConfigMenu.performed += instance.OnToggleConfigMenu;
+            @ToggleConfigMenu.canceled += instance.OnToggleConfigMenu;
             @ToggleMainMenu.started += instance.OnToggleMainMenu;
             @ToggleMainMenu.performed += instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled += instance.OnToggleMainMenu;
@@ -1180,9 +1180,9 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
             @SelectMovementType.started -= instance.OnSelectMovementType;
             @SelectMovementType.performed -= instance.OnSelectMovementType;
             @SelectMovementType.canceled -= instance.OnSelectMovementType;
-            @ToggleConfigGUI.started -= instance.OnToggleConfigGUI;
-            @ToggleConfigGUI.performed -= instance.OnToggleConfigGUI;
-            @ToggleConfigGUI.canceled -= instance.OnToggleConfigGUI;
+            @ToggleConfigMenu.started -= instance.OnToggleConfigMenu;
+            @ToggleConfigMenu.performed -= instance.OnToggleConfigMenu;
+            @ToggleConfigMenu.canceled -= instance.OnToggleConfigMenu;
             @ToggleMainMenu.started -= instance.OnToggleMainMenu;
             @ToggleMainMenu.performed -= instance.OnToggleMainMenu;
             @ToggleMainMenu.canceled -= instance.OnToggleMainMenu;
@@ -1515,12 +1515,12 @@ public partial class @CF_InputControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectMovementType(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "ToggleConfigGUI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ToggleConfigMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleConfigGUI(InputAction.CallbackContext context);
+        void OnToggleConfigMenu(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ToggleMainMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

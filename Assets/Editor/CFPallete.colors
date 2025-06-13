@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: CFPallete
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: 
+    m_Color: {r: 0.83921576, g: 0.2509804, b: 0.27058825, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.6392157, g: 0.7372549, b: 0.97647065, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.30177912, g: 0.34806424, b: 0.461, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.18431373, g: 0.1764706, b: 0.18039216, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.8588236, g: 0.6784314, b: 0.4156863, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.3019608, g: 0.54509807, b: 0.19215688, a: 1}
+  - m_Name: 
+    m_Color: {r: 0.85882354, g: 0.82176495, b: 0.76778823, a: 1}

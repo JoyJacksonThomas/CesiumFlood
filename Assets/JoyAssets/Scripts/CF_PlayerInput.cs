@@ -16,8 +16,8 @@ public class CF_PlayerInput : MonoBehaviour
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        // Cursor.visible = false;
+        // Cursor.lockState = CursorLockMode.Confined;
         waterSlider.GetComponent<WaterSlider>().UpdateWaterHeight();
         waterSlider.gameObject.SetActive(false);
         waterSlider.transform.parent.gameObject.SetActive(false);

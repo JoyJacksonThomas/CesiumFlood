@@ -19,23 +19,36 @@ public class CF_PlayerController : MonoBehaviour {
     public TPS_CameraController m_CameraController;
 
     private CF_InputControls controls;
+    private UIManager m_UIManager;
 
     private void Awake() {
         controls = new CF_InputControls();
 
         controls.Player.SelectMovementType.performed += OnChangeMovementType;
 
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+        m_UIManager = UIManager.Instance;
+
+
     }
 
-    public void OnToggleConfigGUI(InputValue value) {
+    public void OnToggleConfigMenu(InputValue value) {
 
-        UIManager.Instance.ToggleConfigUI();
+        m_UIManager.ToggleConfigMenu();
+
+    }
+
+    public void OnToggleMainMenu(InputValue value) {
+
+        m_UIManager.ToggleMainMenu();
 
     }
 
     public void OnLook(InputValue value) {
+
+        if (m_UIManager.GetCurrentMenuState() != UIMenuState.None) {
+            // If a menu is open, ignore look input
+            return;
+        }
         Vector2 input = value.Get<Vector2>();
         if (input.magnitude > 100f) {
             // Ignore large input values that may be caused by glitches or unintended input
