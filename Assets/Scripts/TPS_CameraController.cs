@@ -168,8 +168,6 @@ public class TPS_CameraController : MonoBehaviour
 
     public void AddRotation(float x, float y, float z)
     {
-        Debug.Log($"Adding rotation: X={x}, Y={y}, Z={z}");
-
         rotationX += x * sensitivity * Time.deltaTime;
         rotationY += y * sensitivity * Time.deltaTime;
         rotationZ += z * sensitivity * Time.deltaTime;

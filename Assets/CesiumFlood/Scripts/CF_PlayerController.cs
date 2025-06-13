@@ -1,3 +1,4 @@
+using CesiumFlood;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,9 +29,9 @@ public class CF_PlayerController : MonoBehaviour {
         Cursor.visible = false;
     }
 
-    public void OnToggleGUI(InputValue value) {
+    public void OnToggleConfigGUI(InputValue value) {
 
-        Debug.Log("Toggle GUI action performed");
+        UIManager.Instance.ToggleConfigUI();
 
     }
 
@@ -91,8 +92,7 @@ public class CF_PlayerController : MonoBehaviour {
                 HandleEnterMovementState(MovementType.JetSki);
                 break;
             case "3":
-                // HandleEnterMovementState(MovementType.Drone);
-                throw new System.NotImplementedException("Drone movement type not implemented yet");
+                HandleEnterMovementState(MovementType.Drone);
                 break;
             default:
                 Debug.LogWarning("Unknown movement type key: " + key);

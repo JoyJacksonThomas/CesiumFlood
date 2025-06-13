@@ -61,7 +61,7 @@ public class BoatMovement : MonoBehaviour
         // move.x = Input.GetAxis("Horizontal");
         // move.y = Input.GetAxis("Vertical");
 
-        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         float flatSpeed = flatVelocity.magnitude;
         for (int i = 0; i < floaters.Length; i++)
         {
@@ -82,7 +82,7 @@ public class BoatMovement : MonoBehaviour
         //    }
         //}
         
-        EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.velocity.magnitude/ topSpeed);
+        EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.linearVelocity.magnitude/ topSpeed);
 
         
         rotationOverLifetime.enabled = true;

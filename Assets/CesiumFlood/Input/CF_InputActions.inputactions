@@ -42,10 +42,19 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ToggleGUI",
+                    "name": "ToggleConfigGUI",
                     "type": "Button",
                     "id": "8bb225af-2573-4dc2-9094-2799f9b3ced4",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleMainMenu",
+                    "type": "Button",
+                    "id": "009c71fe-3f3b-4f84-9435-12ffb40b454b",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -279,7 +288,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "ToggleGUI",
+                    "action": "ToggleConfigGUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68e29052-2381-4f38-8ee8-22fde4fe6636",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
