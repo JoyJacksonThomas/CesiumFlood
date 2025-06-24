@@ -27,8 +27,6 @@ public class CF_PlayerController : MonoBehaviour {
         controls.Player.SelectMovementType.performed += OnChangeMovementType;
 
         m_UIManager = UIManager.Instance;
-
-
     }
 
     public void OnToggleConfigMenu(InputValue value) {
@@ -113,13 +111,13 @@ public class CF_PlayerController : MonoBehaviour {
         }
     }
 
-    void HandleEnterMovementState(MovementType newMovementType) {
+    void HandleEnterMovementState(MovementType newMovementType, bool force = false) {
         MovementType oldMovementType = movementType;
-        if (newMovementType == oldMovementType) {
+        if (newMovementType == oldMovementType && !force) {
             // If the new movement type is the same as the old one, do nothing
             return;
         }
-
+        CharacterController cc = GetComponent<CharacterController>();
         // Exit the old movement state if necessary
         // Enter New Movement State
         movementType = newMovementType;
@@ -127,9 +125,13 @@ public class CF_PlayerController : MonoBehaviour {
         switch (oldMovementType) {
             case MovementType.Walk:
                 m_WalkMovement.gameObject.SetActive(false);
+
+                cc.enabled = false;
+                cc.detectCollisions = false;
                 break;
             case MovementType.JetSki:
                 m_BoatMovement.gameObject.SetActive(false);
+                GetComponent<Rigidbody>().isKinematic = true;
                 break;
             case MovementType.Drone:
                 // Handle exiting drone state if needed
@@ -142,9 +144,13 @@ public class CF_PlayerController : MonoBehaviour {
         switch (movementType) {
             case MovementType.Walk:
                 m_WalkMovement.gameObject.SetActive(true);
+                transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                cc.enabled = true;
+                cc.detectCollisions = true;
                 break;
             case MovementType.JetSki:
                 m_BoatMovement.gameObject.SetActive(true);
+                GetComponent<Rigidbody>().isKinematic = false;
                 break;
             case MovementType.Drone:
                 // Handle entering drone state if needed

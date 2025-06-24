@@ -49,9 +49,8 @@ public class TPS_Player_NEW : MonoBehaviour
     public float stopSpeed;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        position = transform.position;
+    void Start() {
+        // position = transform.position;
         m_CurrentClipInfo = Animator.GetCurrentAnimatorClipInfo(0);
     }
 
@@ -123,7 +122,7 @@ public class TPS_Player_NEW : MonoBehaviour
     {
         acceleration = (transform.position - position) * (1/ deltaTime) - velocity;
         velocity = (transform.position - position) * (1 / deltaTime);
-        position = transform.position;
+        position = transform.parent.position;
     }
 
     void ApplyGravity()
