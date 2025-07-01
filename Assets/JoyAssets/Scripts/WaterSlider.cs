@@ -10,6 +10,9 @@ public class WaterSlider : MonoBehaviour
     public WaterPlaneSpawner waterSpawner;
     Slider waterLevelSlider;
 
+
+
+
     public float CurrentWaterHeight;
     public float[] WaterHeights;
 
@@ -18,23 +21,37 @@ public class WaterSlider : MonoBehaviour
     public TextMeshProUGUI TextBox;
     
 
+    [Header("UI")]
+    public RectTransform fillBox;
+    public Vector2 fillBoxHeightMinMax;
 
     // Start is called before the first frame update
     void Awake()
     {
         waterLevelSlider = GetComponent<Slider>();
+        waterLevelSlider.onValueChanged.AddListener(OnSliderValueChanged);
         UpdateSliderValue();
+    }
+
+    void OnSliderValueChanged(float value) {
+        AdjustWaterSlider(value);
+        UpdateWaterHeight();
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateWaterHeight();
+        // UpdateWaterHeight();
     }
 
     public void AdjustWaterSlider(float lerpValue)
     {
         CurrentWaterHeight = Mathf.Lerp(0, WaterHeights[WaterHeights.Length - 1], lerpValue);
+
+
+        float height = Mathf.Lerp(fillBoxHeightMinMax.x, fillBoxHeightMinMax.y, waterLevelSlider.normalizedValue);
+        fillBox.sizeDelta = new Vector2(fillBox.sizeDelta.x, height);
+
     }
 
     public void AdjustWaterToPresets(int direction)
@@ -65,7 +82,8 @@ public class WaterSlider : MonoBehaviour
 
     public void UpdateWaterHeight()
     {
-        waterSpawner.WaterHeight = CurrentWaterHeight;
+        if (waterSpawner != null)
+            waterSpawner.WaterHeight = CurrentWaterHeight;
     }
 
     void UpdateSliderValue()
