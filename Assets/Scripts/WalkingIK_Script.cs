@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
-public struct IK_Info
-{
+public struct IK_Info {
     public MovementState MoveState;
 
     public Transform RayOrigin;
     public float RayLength;
 }
-public class WalkingIK_Script : MonoBehaviour
-{
+
+public class WalkingIK_Script : MonoBehaviour {
     public Transform LeftKneeTrans;
     public Transform RightKneeTrans;
 
@@ -29,14 +27,11 @@ public class WalkingIK_Script : MonoBehaviour
     public float OffSetRotationY;
 
     public Animator Animator;
-    public UnityEngine.Animations.Rigging.TwoBoneIKConstraint LeftFootConstraint;
-    public UnityEngine.Animations.Rigging.TwoBoneIKConstraint RightFootConstraint;
+    public TwoBoneIKConstraint LeftFootConstraint;
+    public TwoBoneIKConstraint RightFootConstraint;
 
     public bool LockLeftFoot;
     public bool LockRightFoot;
-
-    Vector3 LockedLeftFootPos;
-    Vector3 LockedRightFootPos;
 
     public TPS_Player_NEW myPlayer;
 
@@ -44,13 +39,14 @@ public class WalkingIK_Script : MonoBehaviour
 
     public Transform AlignTransform;
     public float maxGroundAlignAngleX, maxGroundAlignAngleZ;
-    
+
     public AnimationCurve animCurve;
     public float velocityInfluenceOnAlign;
     public float alignTime;
     public LayerMask groundLayer;
     public float RaySpacing;
     public Vector3 RayCenter;
+
     [HideInInspector]
     public Vector3 StickDirection;
 
@@ -64,17 +60,19 @@ public class WalkingIK_Script : MonoBehaviour
     public AnimationCurve leaningAnimCurve;
     public float leaningTime;
     public Transform leanTransform;
-    public float lastYRot = 0;
+    public float lastYRot;
 
     public AudioSource footSound;
-
-    Vector3 groundNormal = Vector3.up;
     public float FinalRotationLerpTime;
     public Transform lowerSpineTrans;
 
+    private Vector3 groundNormal = Vector3.up;
+
+    private Vector3 LockedLeftFootPos;
+    private Vector3 LockedRightFootPos;
+
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Start() {
         LeftFootConstraint.weight = 0;
         RightFootConstraint.weight = 0;
     }
@@ -85,10 +83,10 @@ public class WalkingIK_Script : MonoBehaviour
     //    //transform.localEulerAngles = Vector3.zero;
     //}
 
-    private void Update()
-    {
+    private void Update() {
         groundNormal = GetGroundData();
-        transform.rotation = Quaternion.Lerp(transform.rotation, AlignTransform.rotation * leanTransform.rotation, Time.deltaTime * FinalRotationLerpTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, AlignTransform.rotation * leanTransform.rotation,
+            Time.deltaTime * FinalRotationLerpTime);
 
         {
             /*
@@ -167,10 +165,12 @@ public class WalkingIK_Script : MonoBehaviour
 
             RaycastHit hit;
 
-            Vector3 leftFootRayOrigin = Vector3.zero, rightFootRayOrigin = Vector3.zero, leftKneeDirection = Vector3.zero, rightKneeDirection = Vector3.zero;
+            Vector3 leftFootRayOrigin = Vector3.zero,
+                rightFootRayOrigin = Vector3.zero,
+                leftKneeDirection = Vector3.zero,
+                rightKneeDirection = Vector3.zero;
             float leftFootRayDistance = RayDistance, rightFootRayDistance = RayDistance;
-            if (myPlayer.movementState == MovementState.WALKING)
-            {
+            if (myPlayer.movementState == MovementState.WALKING) {
                 leftFootRayOrigin = LeftKneeTrans.position;
                 rightFootRayOrigin = RightKneeTrans.position;
 
@@ -178,9 +178,7 @@ public class WalkingIK_Script : MonoBehaviour
                 rightFootRayDistance = RayDistance;
                 leftKneeDirection = LeftKneeTrans.up;
                 rightKneeDirection = RightKneeTrans.up;
-            }
-            else
-            {
+            } else {
                 leftFootRayOrigin = LeftThighTrans.position;
                 rightFootRayOrigin = RightThighTrans.position;
 
@@ -188,18 +186,14 @@ public class WalkingIK_Script : MonoBehaviour
                 rightFootRayDistance = RayDistance * 2;
                 leftKneeDirection = -transform.up;
                 rightKneeDirection = -transform.up;
-
-                
             }
 
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(leftFootRayOrigin, (leftKneeDirection), out hit, leftFootRayDistance, Mask))
-            {
-                if(LockLeftFoot == false)
-                {
-                    Debug.DrawRay(leftFootRayOrigin, (leftKneeDirection) * hit.distance, Color.yellow);
+            if (Physics.Raycast(leftFootRayOrigin, leftKneeDirection, out hit, leftFootRayDistance, Mask)) {
+                if (LockLeftFoot == false) {
+                    Debug.DrawRay(leftFootRayOrigin, leftKneeDirection * hit.distance, Color.yellow);
 
-                    LeftFootTarget.position = leftFootRayOrigin + (leftKneeDirection) * (hit.distance - OffSetY);
+                    LeftFootTarget.position = leftFootRayOrigin + leftKneeDirection * (hit.distance - OffSetY);
                     LockedLeftFootPos = LeftFootTarget.position;
 
                     LeftFootTarget.up = hit.normal;
@@ -209,24 +203,20 @@ public class WalkingIK_Script : MonoBehaviour
                     footSound.time = 0;
                     footSound.Play();
                 }
-                LeftFootConstraint.weight = Mathf.Lerp(LeftFootConstraint.weight, 1, .02f);
 
-            }
-            else
-            {
+                LeftFootConstraint.weight = Mathf.Lerp(LeftFootConstraint.weight, 1, .02f);
+            } else {
                 Debug.DrawRay(leftFootRayOrigin, leftKneeDirection * leftFootRayDistance, Color.white);
                 LockLeftFoot = false;
                 //LeftFootConstraint.weight = 0;
                 LeftFootConstraint.weight = Mathf.Lerp(LeftFootConstraint.weight, 0, .05f);
             }
 
-            if (Physics.Raycast(rightFootRayOrigin, (rightKneeDirection), out hit, rightFootRayDistance, Mask))
-            {
-                if (LockRightFoot == false)
-                {
-                    Debug.DrawRay(rightFootRayOrigin, (rightKneeDirection) * hit.distance, Color.yellow);
+            if (Physics.Raycast(rightFootRayOrigin, rightKneeDirection, out hit, rightFootRayDistance, Mask)) {
+                if (LockRightFoot == false) {
+                    Debug.DrawRay(rightFootRayOrigin, rightKneeDirection * hit.distance, Color.yellow);
 
-                    RightFootTarget.position = rightFootRayOrigin + (rightKneeDirection) * (hit.distance - OffSetY);
+                    RightFootTarget.position = rightFootRayOrigin + rightKneeDirection * (hit.distance - OffSetY);
                     LockedRightFootPos = RightFootTarget.position;
 
                     RightFootTarget.up = hit.normal;
@@ -236,17 +226,16 @@ public class WalkingIK_Script : MonoBehaviour
                     footSound.time = 0;
                     footSound.Play();
                 }
+
                 RightFootConstraint.weight = Mathf.Lerp(RightFootConstraint.weight, 1, .02f);
-            }
-            else
-            {
+            } else {
                 Debug.DrawRay(rightFootRayOrigin, rightKneeDirection * rightFootRayDistance, Color.white);
                 LockRightFoot = false;
                 //RightFootConstraint.weight = 0;
                 RightFootConstraint.weight = Mathf.Lerp(RightFootConstraint.weight, 0, .05f);
             }
 
-            {   
+            {
                 //if (Physics.Raycast(rightFootRayOrigin, rightKneeDirection, out hit, rightFootRayDistance, Mask))
                 //{
                 //    if(!LockRightFoot)
@@ -271,62 +260,65 @@ public class WalkingIK_Script : MonoBehaviour
                 //    RightFootConstraint.weight = 0;
                 //}
             }
-
-
-            }
+        }
 
         LeftFootTarget.position = LockedLeftFootPos;
         RightFootTarget.position = LockedRightFootPos;
     }
 
-    private void FixedUpdate()
-    {
-        
+    private void FixedUpdate() {
         ApplyGroundAlign();
         ApplyLean();
     }
 
-    public void LeftFootPlaced(int placed)
-    {
-        if (placed == 1)
-        {
+    public void LeftFootPlaced(int placed) {
+        if (placed == 1) {
             LockLeftFoot = true;
-            footSound.time = 0;
-            footSound.Play();
-        }
-        else
+            PlayFootSound();
+        } else {
             LockLeftFoot = false;
+        }
     }
 
-    public void RightFootPlaced(int placed)
-    {
-        if (placed == 1)
-        {
+    public void RightFootPlaced(int placed) {
+        if (placed == 1) {
             LockRightFoot = true;
-            footSound.time = 0;
-            footSound.Play();
-        }    
-        else
+            PlayFootSound();
+        } else {
             LockRightFoot = false;
+        }
     }
 
-    void ApplyGroundAlign()
-    {
-        Ray ray = new Ray(transform.position, -Vector3.up);
-        RaycastHit info = new RaycastHit();
+    private void PlayFootSound() {
+        if (!footSound) {
+            Debug.LogWarning("Foot sound not assigned!");
+            return;
+        }
+
+        footSound.time = 0;
+        footSound.Play();
+    }
+
+
+    private void ApplyGroundAlign() {
+        Ray ray = new(transform.position, -Vector3.up);
+        RaycastHit info = new();
         Quaternion rotationRef = Quaternion.Euler(0, 0, 0);
 
-        if (Physics.Raycast(ray, out info, groundLayer))
-        {
+        if (Physics.Raycast(ray, out info, groundLayer)) {
             Vector3 localGroundNormal = transform.parent.InverseTransformDirection(groundNormal);
             Debug.DrawRay(transform.position, groundNormal * 10f, Color.yellow);
             Debug.DrawRay(transform.position, localGroundNormal * 10f, Color.green);
 
-            Vector3 clampedAngleNormalXY = ClampVector(new Vector3(groundNormal.x, groundNormal.y, 0f), Vector3.up, maxGroundAlignAngleZ);
-            Vector3 clampedAngleNormalZY = ClampVector(new Vector3(0, groundNormal.y, groundNormal.z), Vector3.up, maxGroundAlignAngleX);
+            Vector3 clampedAngleNormalXY = ClampVector(new Vector3(groundNormal.x, groundNormal.y, 0f), Vector3.up,
+                maxGroundAlignAngleZ);
+            Vector3 clampedAngleNormalZY = ClampVector(new Vector3(0, groundNormal.y, groundNormal.z), Vector3.up,
+                maxGroundAlignAngleX);
 
 
-            rotationRef = Quaternion.Lerp(AlignTransform.rotation, Quaternion.FromToRotation(Vector3.up, new Vector3(clampedAngleNormalXY.x, clampedAngleNormalXY.y, clampedAngleNormalZY.z)), alignTime);
+            rotationRef = Quaternion.Lerp(AlignTransform.rotation,
+                Quaternion.FromToRotation(Vector3.up,
+                    new Vector3(clampedAngleNormalXY.x, clampedAngleNormalXY.y, clampedAngleNormalZY.z)), alignTime);
 
             AlignTransform.up = rotationRef * Vector3.up;
 
@@ -336,8 +328,7 @@ public class WalkingIK_Script : MonoBehaviour
         }
     }
 
-    void ApplyLean()
-    {
+    private void ApplyLean() {
         //Rotation Offset Method Static Up
         {
             /*
@@ -364,8 +355,11 @@ public class WalkingIK_Script : MonoBehaviour
 
         //Rotation Offset Method Dynamic Up
         {
-            localVelPlusAccel = AlignTransform.InverseTransformDirection(new Vector3(myPlayer.velocity.x, myPlayer.velocity.y, myPlayer.velocity.z));
-            localVelPlusAccel += AlignTransform.InverseTransformDirection(new Vector3(myPlayer.acceleration.x, myPlayer.velocity.y, myPlayer.acceleration.z));
+            localVelPlusAccel =
+                AlignTransform.InverseTransformDirection(new Vector3(myPlayer.velocity.x, myPlayer.velocity.y,
+                    myPlayer.velocity.z));
+            localVelPlusAccel += AlignTransform.InverseTransformDirection(new Vector3(myPlayer.acceleration.x,
+                myPlayer.velocity.y, myPlayer.acceleration.z));
 
             float targetLeanX = Mathf.Clamp(localVelPlusAccel.z * leaningScale.x * Mathf.Rad2Deg, -maxLeanX, maxLeanX);
             float targetLeanZ = Mathf.Clamp(localVelPlusAccel.x * leaningScale.z * Mathf.Rad2Deg, -maxLeanZ, maxLeanZ);
@@ -388,25 +382,28 @@ public class WalkingIK_Script : MonoBehaviour
         }
     }
 
-    Vector3 GetGroundData()
-    {
+    private Vector3 GetGroundData() {
         Vector3 avgGroundNormal = Vector3.zero;
 
-        localVelPlusAccel = AlignTransform.InverseTransformDirection(new Vector3(myPlayer.velocity.x, myPlayer.velocity.y, myPlayer.velocity.z));
-        localVelPlusAccel += AlignTransform.InverseTransformDirection(new Vector3(myPlayer.acceleration.x, myPlayer.velocity.y, myPlayer.acceleration.z));
+        localVelPlusAccel =
+            AlignTransform.InverseTransformDirection(new Vector3(myPlayer.velocity.x, myPlayer.velocity.y,
+                myPlayer.velocity.z));
+        localVelPlusAccel += AlignTransform.InverseTransformDirection(new Vector3(myPlayer.acceleration.x,
+            myPlayer.velocity.y, myPlayer.acceleration.z));
 
-        for (int i = -1; i <= 1; i++)
-        {
-            for (int j = -1; j <= 1; j++)
-            {
-                float rayCenterZ = RayCenter.z * localVelPlusAccel.z* velocityInfluenceOnAlign;
-                Vector3 origin = transform.position + transform.right * (RaySpacing * i + RayCenter.x)  + RayCenter.y * transform.up + transform.forward * (RaySpacing * j + rayCenterZ); //new Vector3(RaySpacing * i * transform.right, 0, RaySpacing * j);
-                Ray ray = new Ray(origin, -transform.up);
-                RaycastHit info = new RaycastHit();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                float rayCenterZ = RayCenter.z * localVelPlusAccel.z * velocityInfluenceOnAlign;
+                Vector3 origin = transform.position + transform.right * (RaySpacing * i + RayCenter.x) +
+                                 RayCenter.y * transform.up +
+                                 transform.forward *
+                                 (RaySpacing * j +
+                                  rayCenterZ); //new Vector3(RaySpacing * i * transform.right, 0, RaySpacing * j);
+                Ray ray = new(origin, -transform.up);
+                RaycastHit info = new();
                 Quaternion rotationRef = Quaternion.Euler(0, 0, 0);
 
-                if (Physics.Raycast(ray, out info, groundLayer))
-                {
+                if (Physics.Raycast(ray, out info, groundLayer)) {
                     avgGroundNormal += info.normal;
 
                     Debug.DrawRay(origin, -transform.up * info.distance, Color.red);
@@ -418,8 +415,7 @@ public class WalkingIK_Script : MonoBehaviour
         return avgGroundNormal / 9;
     }
 
-    public static Quaternion ClampRotation(Quaternion q, Vector3 bounds)
-    {
+    public static Quaternion ClampRotation(Quaternion q, Vector3 bounds) {
         q.x /= q.w;
         q.y /= q.w;
         q.z /= q.w;
@@ -440,23 +436,15 @@ public class WalkingIK_Script : MonoBehaviour
         return q;
     }
 
-    Vector3 ClampVector(Vector3 direction, Vector3 center, float maxAngle)
-    {
-
-
+    private Vector3 ClampVector(Vector3 direction, Vector3 center, float maxAngle) {
         float angle = Vector3.Angle(center, direction);
-        if (angle > maxAngle)
-        {
-
+        if (angle > maxAngle) {
             direction.Normalize();
             center.Normalize();
             Vector3 rotation = (direction - center) / angle;
-            return (rotation * maxAngle) + center;
-
+            return rotation * maxAngle + center;
         }
 
         return direction;
-
     }
-
 }
