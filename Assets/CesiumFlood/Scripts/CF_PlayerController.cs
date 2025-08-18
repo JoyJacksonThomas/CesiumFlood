@@ -13,7 +13,7 @@ public class CF_PlayerController : MonoBehaviour {
     public BoatMovement m_BoatMovement;
     public TPS_Player_NEW m_WalkMovement;
     public TPS_CameraController m_CameraController;
-    public FreeFlyCamera m_DroneMovement;
+    public DroneMovement m_DroneMovement;
 
     private CF_InputControls controls;
     private UIManager m_UIManager;
@@ -58,6 +58,7 @@ public class CF_PlayerController : MonoBehaviour {
         }
 
         m_CameraController.OnLook(input);
+        m_DroneMovement.SetLookDirection(m_CameraController.GetLookDirection());
     }
 
 
@@ -88,8 +89,8 @@ public class CF_PlayerController : MonoBehaviour {
                 m_BoatMovement.OnJump();
                 break;
             case MovementType.Drone:
-                m_DroneMovement.OnJump();
-                break;
+                // drone movement does not have a jump action
+                return;
             default:
                 Debug.LogWarning("Unknown movement type for jump: " + movementType);
                 break;
@@ -97,14 +98,14 @@ public class CF_PlayerController : MonoBehaviour {
     }
 
     public void OnShift(InputValue value) {
-        // Handle shift action based on the current movement type
-        switch (movementType) {
-            case MovementType.Drone:
-                m_DroneMovement.OnShift();
-                break;
-            default:
-                return;
-        }
+        // // Handle shift action based on the current movement type
+        // switch (movementType) {
+        //     case MovementType.Drone:
+        //         m_DroneMovement.OnShift();
+        //         break;
+        //     default:
+        //         return;
+        // }
     }
 
     private void OnChangeMovementType(InputAction.CallbackContext context) {
@@ -170,6 +171,7 @@ public class CF_PlayerController : MonoBehaviour {
                 break;
             case MovementType.Drone:
                 m_DroneMovement.gameObject.SetActive(true);
+                m_DroneMovement.OnEnterMovementState();
                 break;
             default:
                 Debug.LogWarning("Unknown movement type: " + oldMovementType);

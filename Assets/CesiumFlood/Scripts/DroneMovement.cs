@@ -1,18 +1,14 @@
-﻿//===========================================================================//
-//                       FreeFlyCamera (Version 1.2)                         //
-//                        (c) 2019 Sergey Stafeyev                           //
-//===========================================================================//
+﻿// Adapted from: FreeFlyCamera (Version 1.2) (c) 2019 Sergey Stafeyev	//
 
 using UnityEngine;
 
-public class FreeFlyCamera : MonoBehaviour {
+public class DroneMovement : MonoBehaviour {
     private float _currentIncrease = 1;
     private float _currentIncreaseMem;
 
     private Vector3 _initPosition;
     private Vector3 _initRotation;
 
-    private CursorLockMode _wantedMode;
     private Vector3 deltaPosition = Vector3.zero;
 
     private void Start() {
@@ -56,37 +52,17 @@ public class FreeFlyCamera : MonoBehaviour {
 
             // Calc acceleration
             CalculateCurrentIncrease(deltaPosition != Vector3.zero);
-
+            deltaPosition = transform.forward * input.z + transform.right * input.x + transform.up * input.y;
             transform.parent.position += deltaPosition * (currentSpeed * _currentIncrease);
             // deltaPosition = Vector3.zero;
         }
 
-        // Rotation
-        // if (_enableRotation) {
-        //     // Pitch
-        //     transform.parent.rotation *= Quaternion.AngleAxis(
-        //         -Input.GetAxis("Mouse Y") * _mouseSense,
-        //         Vector3.right
-        //     );
-        //
-        //     // Paw
-        //     transform.parent.rotation = Quaternion.Euler(
-        //         transform.parent.eulerAngles.x,
-        //         transform.parent.eulerAngles.y + Input.GetAxis("Mouse X") * _mouseSense,
-        //         transform.parent.eulerAngles.z
-        //     );
-        // }
 
-        // Return to init position
-        // if (Input.GetKeyDown(_initPositonButton)) {
-        //     transform.parent.position = _initPosition;
-        //     transform.parent.eulerAngles = _initRotation;
-        // }
-    }
-
-    private void OnEnable() {
-        if (_active)
-            _wantedMode = CursorLockMode.Locked;
+        if (!(Mathf.Abs(transform.parent.eulerAngles.y - rotationTarget) < 0.01f)) {
+            float newYRot = Mathf.LerpAngle(transform.parent.eulerAngles.y, rotationTarget, 0.5f);
+            transform.parent.eulerAngles =
+                new Vector3(transform.parent.eulerAngles.x, newYRot, transform.parent.eulerAngles.z);
+        }
     }
 
 #if UNITY_EDITOR
@@ -96,23 +72,17 @@ public class FreeFlyCamera : MonoBehaviour {
     }
 #endif
 
-    public void OnMove(Vector3 input) {
-        Debug.Log("Drone::OnMove input: " + input);
-        deltaPosition = input;
+    public void OnEnterMovementState() {
+        _active = true;
+        transform.parent.rotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
+    }
+
+    public void OnMove(Vector3 _input) {
+        input = _input;
     }
 
     public void OnLook(Vector2 input) {
         Debug.Log("Drone::OnLook input: " + input);
-    }
-
-    public void OnJump() {
-        Debug.Log("Drone::OnJump");
-        deltaPosition += transform.parent.up;
-    }
-
-    public void OnShift() {
-        Debug.Log("Drone::OnShift");
-        deltaPosition -= transform.parent.up;
     }
 
     private void CalculateCurrentIncrease(bool moving) {
@@ -125,6 +95,13 @@ public class FreeFlyCamera : MonoBehaviour {
 
         _currentIncreaseMem += Time.deltaTime * (_speedAccelerationFactor - 1);
         _currentIncrease = Time.deltaTime + Mathf.Pow(_currentIncreaseMem, 3) * Time.deltaTime;
+    }
+
+    public void SetLookDirection(Vector3 dir) {
+        rotationTarget = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+
+
+        // transform.parent.rotation = Quaternion.Euler(0, targetAngle, 0);
     }
 
     #region UI
@@ -169,14 +146,6 @@ public class FreeFlyCamera : MonoBehaviour {
     [Tooltip("Boost speed")]
     private KeyCode _boostSpeed = KeyCode.LeftShift;
 
-    [SerializeField]
-    [Tooltip("Move up")]
-    private KeyCode _moveUp = KeyCode.E;
-
-    [SerializeField]
-    [Tooltip("Move down")]
-    private KeyCode _moveDown = KeyCode.Q;
-
     [Space]
     [SerializeField]
     [Tooltip("Acceleration at camera movement is active")]
@@ -190,6 +159,9 @@ public class FreeFlyCamera : MonoBehaviour {
     [SerializeField]
     [Tooltip("This keypress will move the camera to initialization position")]
     private KeyCode _initPositonButton = KeyCode.R;
+
+    private float rotationTarget;
+    private Vector3 input;
 
     #endregion UI
 }

@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using CesiumForUnity;
-using UnityEngine.UI;
+using UnityEngine;
 
-public class CF_PlayerInput : MonoBehaviour
-{
-    
+public class CF_PlayerInput : MonoBehaviour {
     public CesiumCameraController camControls;
-    public FreeFlyCamera otherCamControls;
     public bool hideMouse;
     public WaterSlider waterSlider;
+    public DroneMovement otherCamControls;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Start() {
         //Cursor.lockState = CursorLockMode.Confined;
         // Cursor.visible = false;
         // Cursor.lockState = CursorLockMode.Confined;
@@ -24,11 +18,8 @@ public class CF_PlayerInput : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
             hideMouse = !hideMouse;
             //Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -39,14 +30,10 @@ public class CF_PlayerInput : MonoBehaviour
             waterSlider.gameObject.SetActive(hideMouse);
         }
 
-        if(Cursor.visible == true)
-        {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
+        if (Cursor.visible) {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 waterSlider.AdjustWaterToPresets(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
+            } else if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 waterSlider.AdjustWaterToPresets(-1);
             }
         }
