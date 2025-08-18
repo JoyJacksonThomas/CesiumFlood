@@ -48,24 +48,16 @@
 #endregion
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using CesiumFlood;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-
-public class TPS_CameraController : MonoBehaviour
-{
+public class TPS_CameraController : MonoBehaviour {
     public Transform target;
 
     public float sensitivity;
 
-    public float rotationX = 0f;
-    public float rotationY = 0f;
-    public float rotationZ = 0f;
-    Quaternion originalRotation;
+    public float rotationX;
+    public float rotationY;
+    public float rotationZ;
     public Camera mCamera;
 
     // float oneOver180 = 1f / 180f;
@@ -87,63 +79,57 @@ public class TPS_CameraController : MonoBehaviour
 
     public float DistanceToWalls;
 
-    float[] zOffSetQueue = new float[10];
-    int currentQueueIndex = 0;
-
     public float maxDeltaPosition;
     public float maxDeltaRotation;
 
+    private readonly float[] zOffSetQueue = new float[10];
+    private int currentQueueIndex;
+    private Quaternion originalRotation;
 
-    void Start()
-    {
+
+    private void Start() {
         originalRotation = transform.localRotation;
         zOffset = maxOffSet_Z;
-        for (int i = 0; i < 10; i++)
-        {
+        for (int i = 0; i < 10; i++) {
             zOffSetQueue[i] = zOffset;
         }
     }
 
-    public void OnLook(Vector2 input){
-        AddRotation(input.y, input.x, 0);
-    }
-    void Update()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, target.position + new Vector3(0, 1.8f, 0), Time.deltaTime * maxDeltaPosition);
+    private void Update() {
+        transform.position = Vector3.MoveTowards(transform.position, target.position + new Vector3(0, 1.8f, 0),
+            Time.deltaTime * maxDeltaPosition);
 
         transform.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
-
     }
 
 
-
-    void FixedUpdate()
-    {
-
+    private void FixedUpdate() {
         rotationX = Mathf.Clamp(rotationX, -65, 90);
-        
+
 
         RaycastHit hit;
 
         Vector3 pos = mCamera.transform.localPosition;
         bool raysCollided = false;
 
-        if (Physics.Raycast(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.back), out hit, rayLength, camLayerMask))
-        {
+        if (Physics.Raycast(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.back), out hit,
+                rayLength, camLayerMask)) {
             zOffset = transform.InverseTransformPoint(hit.point).z + DistanceToWalls;
 
-            Debug.DrawRay(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.back), Color.blue, hit.distance);
-            raysCollided = true;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, -zOffset, camLayerMask))
-        {
-            zOffset = transform.InverseTransformPoint(hit.point).z + DistanceToWalls;
-            Debug.DrawRay(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.forward), Color.green, -zOffset);
+            Debug.DrawRay(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.back), Color.blue,
+                hit.distance);
             raysCollided = true;
         }
 
-        if (raysCollided == false)
-        {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, -zOffset,
+                camLayerMask)) {
+            zOffset = transform.InverseTransformPoint(hit.point).z + DistanceToWalls;
+            Debug.DrawRay(mCamera.transform.position, mCamera.transform.TransformDirection(Vector3.forward),
+                Color.green, -zOffset);
+            raysCollided = true;
+        }
+
+        if (raysCollided == false) {
             zOffset = Mathf.MoveTowards(zOffset, maxOffSet_Z, .7f);
         }
 
@@ -154,21 +140,23 @@ public class TPS_CameraController : MonoBehaviour
         currentQueueIndex = (currentQueueIndex + 1) % 10;
 
         float averageOffSet = 0;
-        for (int i = 0; i < 10; i++)
-        {
+        for (int i = 0; i < 10; i++) {
             averageOffSet += zOffSetQueue[i];
         }
-        averageOffSet *= .1f;/**/
+
+        averageOffSet *= .1f; /**/
 
         pos.z = zOffset;
 
         mCamera.transform.localPosition = Vector3.MoveTowards(mCamera.transform.localPosition, pos, 1f);
         mCamera.transform.localPosition = pos;
-
     }
 
-    public void AddRotation(float x, float y, float z)
-    {
+    public void OnLook(Vector2 input) {
+        AddRotation(input.y, input.x, 0);
+    }
+
+    public void AddRotation(float x, float y, float z) {
         rotationX += x * sensitivity * Time.deltaTime;
         rotationY += y * sensitivity * Time.deltaTime;
         rotationZ += z * sensitivity * Time.deltaTime;
@@ -176,6 +164,7 @@ public class TPS_CameraController : MonoBehaviour
         Offset.y = (int)transform.eulerAngles.x;
     }
 
-
-
+    public Vector3 GetLookDirection() {
+        return mCamera.transform.forward;
+    }
 }
