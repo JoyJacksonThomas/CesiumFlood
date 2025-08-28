@@ -490,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 436275a13d4459746955fc6db5953473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelTransform: {fileID: 1583172398873355951}
   _active: 1
   _enableRotation: 1
   _mouseSense: 1.8
@@ -500,7 +501,7 @@ MonoBehaviour:
   _boostedSpeed: 50
   _boostSpeed: 304
   _enableSpeedAcceleration: 1
-  _speedAccelerationFactor: 1.5
+  _speedAccelerationFactor: 1.01
   _initPositonButton: 114
 --- !u!1 &9112881336032897037
 GameObject:
