@@ -15,10 +15,13 @@ public class CF_PlayerController : MonoBehaviour {
     public TPS_CameraController m_CameraController;
     public DroneMovement m_DroneMovement;
 
-    private CF_InputControls controls;
-    private UIManager m_UIManager;
+    [SerializeField]
+    private MovementType movementType = MovementType.Drone;
 
-    private MovementType movementType = MovementType.Walk;
+    private CF_InputControls controls;
+
+    private CharacterController m_CharacterController;
+    private UIManager m_UIManager;
 
     private void Awake() {
         controls = new CF_InputControls();
@@ -26,6 +29,8 @@ public class CF_PlayerController : MonoBehaviour {
         controls.Player.SelectMovementType.performed += OnChangeMovementType;
 
         m_UIManager = UIManager.Instance;
+
+        m_CharacterController = GetComponent<CharacterController>();
         HandleEnterMovementState(movementType, true);
     }
 
@@ -134,7 +139,17 @@ public class CF_PlayerController : MonoBehaviour {
             return;
         }
 
-        CharacterController cc = GetComponent<CharacterController>();
+        if (force) {
+            //disable all movement types
+            m_WalkMovement.gameObject.SetActive(false);
+
+            m_CharacterController.enabled = false;
+            m_CharacterController.detectCollisions = false;
+
+            m_BoatMovement.gameObject.SetActive(false);
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+
         // Exit the old movement state if necessary
         // Enter New Movement State
         movementType = newMovementType;
@@ -143,8 +158,8 @@ public class CF_PlayerController : MonoBehaviour {
             case MovementType.Walk:
                 m_WalkMovement.gameObject.SetActive(false);
 
-                cc.enabled = false;
-                cc.detectCollisions = false;
+                m_CharacterController.enabled = false;
+                m_CharacterController.detectCollisions = false;
                 break;
             case MovementType.JetSki:
                 m_BoatMovement.gameObject.SetActive(false);
@@ -162,8 +177,8 @@ public class CF_PlayerController : MonoBehaviour {
             case MovementType.Walk:
                 m_WalkMovement.gameObject.SetActive(true);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-                cc.enabled = true;
-                cc.detectCollisions = true;
+                m_CharacterController.enabled = true;
+                m_CharacterController.detectCollisions = true;
                 break;
             case MovementType.JetSki:
                 m_BoatMovement.gameObject.SetActive(true);
