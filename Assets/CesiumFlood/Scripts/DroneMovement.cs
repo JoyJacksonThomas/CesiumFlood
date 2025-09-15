@@ -9,6 +9,10 @@ public class DroneMovement : MonoBehaviour {
 
     private Vector3 deltaPosition = Vector3.zero;
 
+    private float rotationTarget;
+    private Vector3 input;
+
+    [Header("Movement")]
     [SerializeField]
     private Transform modelTransform;
 
@@ -25,27 +29,61 @@ public class DroneMovement : MonoBehaviour {
     private bool enableAcceleration = true;
 
     [SerializeField]
-    [Tooltip("Rate which is applied during camera movement")]
-    private float accelerationFactor = 1.01f;
+    private Vector2 minMaxSpeed = new Vector2(10f, 50f);
+    /**
+     * Time to go from min to max speed
+     */
+    [SerializeField]
+    private float accelerationSpeed = 5f;
 
-    private float rotationTarget;
-    private Vector3 input;
+    [Space]
+    [Header("Drone Visuals")]
+    [SerializeField]
+    private float maxTiltAngle = 15f;
+
+    [SerializeField]
+    /**
+     * Time to tilt to the max tilt angle
+     */
+    private float tiltSpeed = 1f;
+
+    private float timeSinceStopped = 0f;
 
 
     private void Update() {
-        float currentSpeed = movementSpeed;
+        // float currentSpeed = movementSpeed;
+
+
 
         // Calc acceleration
-        CalculateCurrentIncrease(deltaPosition != Vector3.zero);
-        deltaPosition = transform.forward * input.z + transform.right * input.x + transform.up * input.y;
-        transform.parent.position += deltaPosition * (currentSpeed * currentIncrease);
+        // CalculateCurrentIncrease(deltaPosition != Vector3.zero);
+        // deltaPosition = transform.forward * input.z + transform.right * input.x + transform.up * input.y;
+        // transform.parent.position += deltaPosition * (currentSpeed * currentIncrease);
+        //
+        //
+        // if (!(Mathf.Abs(transform.parent.eulerAngles.y - rotationTarget) < 0.01f)) {
+        //     float newYRot = Mathf.LerpAngle(transform.parent.eulerAngles.y, rotationTarget, 0.5f);
+        //     transform.parent.eulerAngles =
+        //         new Vector3(transform.parent.eulerAngles.x, newYRot, transform.parent.eulerAngles.z);
+        // }
 
+        HandleMovement();
+    }
 
-        if (!(Mathf.Abs(transform.parent.eulerAngles.y - rotationTarget) < 0.01f)) {
-            float newYRot = Mathf.LerpAngle(transform.parent.eulerAngles.y, rotationTarget, 0.5f);
-            transform.parent.eulerAngles =
-                new Vector3(transform.parent.eulerAngles.x, newYRot, transform.parent.eulerAngles.z);
+    private void HandleMovement() {
+        //if we're not moving, don't do anything
+        if (input.magnitude < 0.01f) {
+            return;
         }
+
+        timeSinceStopped += Time.deltaTime;
+
+        float normalizedTimeToMaxSpeed = Mathf.Clamp01(timeSinceStopped / accelerationSpeed);
+
+        float currentSpeed = Mathf.Lerp(minMaxSpeed.x, minMaxSpeed.y, normalizedTimeToMaxSpeed);
+
+        Vector3 delta = transform.forward * input.z + transform.right * input.x + transform.up * input.y;
+        transform.parent.position += delta * currentSpeed;
     }
 
     public void OnEnterMovementState() {
@@ -54,11 +92,17 @@ public class DroneMovement : MonoBehaviour {
 
     public void OnMove(Vector3 _input) {
         input = _input;
+        if (_input.magnitude < 0.01f) {
+            ResetAcceleration();
+        }
+    }
+
+    private void ResetAcceleration() {
+        timeSinceStopped = 0;
     }
 
     private void CalculateCurrentIncrease(bool moving) {
         //this is all garbage, replace with min/max speed and transition time
-        currentIncrease = Time.deltaTime;
 
         if (!enableAcceleration || (enableAcceleration && !moving)) {
             currentIncreaseMem = 0;
