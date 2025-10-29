@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class BoatMovement : MonoBehaviour
-{
-    Rigidbody rb;
-
-    Vector2 move;
+public class BoatMovement : MonoBehaviour {
     public float moveForce;
     public float jumpForce;
     public float rotationSpeed;
@@ -22,21 +15,27 @@ public class BoatMovement : MonoBehaviour
 
     public float maxAngleX, maxAngleZ;
 
-    Vector3 currentAngle;
-    Quaternion _relativeTo;
-
     public AudioSource EngineAudio;
     public float topSpeed;
 
     public ParticleSystem backSplash, leftSplash, rightSplash, mainFoam, engineFoam, ripples;
-    ParticleSystem.RotationOverLifetimeModule rotationOverLifetime;
 
-    public bool motorSubmerged = false;
+    public bool motorSubmerged;
     public Vector3 particleRestingQuaternion, particleMovingQuaternion;
 
+    [SerializeField]
+    private bool debugFloaterLocations;
+
+    private Quaternion _relativeTo;
+
+    private Vector3 currentAngle;
+
+    private Vector2 move;
+    private Rigidbody rb;
+    private ParticleSystem.RotationOverLifetimeModule rotationOverLifetime;
+
     // Start is called before the first frame update
-    void Start()
-    {
+    private void Start() {
         rb = GetComponentInParent<Rigidbody>();
 
         _relativeTo = transform.localRotation;
@@ -44,28 +43,16 @@ public class BoatMovement : MonoBehaviour
         rotationOverLifetime = backSplash.rotationOverLifetime;
     }
 
-    public void OnJump() {
-        // Debug.Log("Jump");
-        rb.AddForce(new Vector3(0, jumpForce, 0) * moveForce, ForceMode.Impulse);
-    }
-
-    public void OnMove(Vector2 value)
-    {
-        // Debug.Log("Move");
-        move = value;
-    }
-
     // Update is called once per frame
-    void Update()
-    {
+    private void Update() {
         // move.x = Input.GetAxis("Horizontal");
         // move.y = Input.GetAxis("Vertical");
 
-        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        Vector3 flatVelocity = new(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         float flatSpeed = flatVelocity.magnitude;
-        for (int i = 0; i < floaters.Length; i++)
-        {
-            floaters[i].localPosition = Vector3.Lerp(restingFloaterPos[i], movingFloaterPos[i], flatSpeed / topSpeed * .25f);
+        for (int i = 0; i < floaters.Length; i++) {
+            floaters[i].localPosition =
+                Vector3.Lerp(restingFloaterPos[i], movingFloaterPos[i], flatSpeed / topSpeed * .25f);
         }
         //if (move.y > 0)
         //{
@@ -81,14 +68,14 @@ public class BoatMovement : MonoBehaviour
         //        floaters[i].localPosition = Vector3.MoveTowards(floaters[i].localPosition, restingFloaterPos[i], floaterTransitionTime);
         //    }
         //}
-        
-        EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.linearVelocity.magnitude/ topSpeed);
 
-        
+        EngineAudio.pitch = Mathf.Lerp(1, 2.5f, rb.linearVelocity.magnitude / topSpeed);
+
+
         rotationOverLifetime.enabled = true;
         rotationOverLifetime.separateAxes = true;
 
-        rotationOverLifetime.xMultiplier =  move.x *4;
+        rotationOverLifetime.xMultiplier = move.x * 4;
         //backSplash.emission.rateOverTimeMultiplier = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
         //backSplash.emissionRate = Mathf.Lerp(0, 200, rb.velocity.magnitude / topSpeed);
         //backSplash.startSpeed = Mathf.Lerp(2f, 0, rb.velocity.magnitude / topSpeed);
@@ -108,17 +95,14 @@ public class BoatMovement : MonoBehaviour
         //        backSplash.Stop();
         //}
 
-        if ((CenterFloater.submerged || Motor.submerged) && move.y != 0)
-        {
+        if ((CenterFloater.submerged || Motor.submerged) && move.y != 0) {
             if (!backSplash.isPlaying)
                 backSplash.Play();
             if (!mainFoam.isPlaying)
                 mainFoam.Play();
             if (!ripples.isPlaying)
                 ripples.Play();
-        }
-        else
-        {
+        } else {
             if (backSplash.isPlaying)
                 backSplash.Stop();
             if (mainFoam.isPlaying)
@@ -127,12 +111,9 @@ public class BoatMovement : MonoBehaviour
                 ripples.Stop();
         }
 
-        if (Motor.submerged && !engineFoam.isPlaying)
-        {
+        if (Motor.submerged && !engineFoam.isPlaying) {
             engineFoam.Play();
-        }
-        else if (!Motor.submerged && engineFoam.isPlaying)
-        {
+        } else if (!Motor.submerged && engineFoam.isPlaying) {
             engineFoam.Stop();
         }
 
@@ -175,19 +156,17 @@ public class BoatMovement : MonoBehaviour
         transform.parent.position = transform.position;
     }
 
-    private void LateUpdate()
-    {
-        motorSubmerged = CenterFloater.submerged;
-    }
-
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         Vector3 flatForward = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
 
-        float x = transform.localEulerAngles.x > 180 ? transform.localEulerAngles.x-360 : transform.localEulerAngles.x;
+        float x = transform.localEulerAngles.x > 180
+            ? transform.localEulerAngles.x - 360
+            : transform.localEulerAngles.x;
         x = Mathf.Clamp(x, -maxAngleX, maxAngleX);
 
-        float z = transform.localEulerAngles.z > 180 ? transform.localEulerAngles.z - 360 : transform.localEulerAngles.z;
+        float z = transform.localEulerAngles.z > 180
+            ? transform.localEulerAngles.z - 360
+            : transform.localEulerAngles.z;
         z -= move.x * tiltSpeed;
         z = Mathf.Clamp(z, -maxAngleZ, maxAngleZ);
 
@@ -197,13 +176,32 @@ public class BoatMovement : MonoBehaviour
         transform.Rotate(Vector3.up, rotationSpeed * move.x);
 
 
-        if(Motor.submerged)
+        if (Motor.submerged)
             rb.AddForce(flatForward * move.y * moveForce, ForceMode.Acceleration);
         else
             rb.AddForce(flatForward * move.y * moveForce * .3f, ForceMode.Acceleration);
-
-
     }
 
-    
+    private void LateUpdate() {
+        motorSubmerged = CenterFloater.submerged;
+    }
+
+    private void OnDrawGizmos() {
+        if (debugFloaterLocations) {
+            foreach (Transform floaterXform in floaters) {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(floaterXform.position, Vector3.one * 0.5f);
+            }
+        }
+    }
+
+    public void OnJump() {
+        // Debug.Log("Jump");
+        rb.AddForce(new Vector3(0, jumpForce, 0) * moveForce, ForceMode.Impulse);
+    }
+
+    public void OnMove(Vector2 value) {
+        // Debug.Log("Move");
+        move = value;
+    }
 }

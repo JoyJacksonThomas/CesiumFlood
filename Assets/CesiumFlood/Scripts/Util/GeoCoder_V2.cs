@@ -18,7 +18,7 @@ public class GeoCoder_V2 : MonoBehaviour {
 
         // Request and wait for the desired page.
         webRequest.SetRequestHeader("User-Agent", "YouthMappers Cesium Flood");
-
+        bool success = false;
         yield return webRequest.SendWebRequest();
 
         switch (webRequest.result) {
@@ -31,12 +31,15 @@ public class GeoCoder_V2 : MonoBehaviour {
                 break;
             case UnityWebRequest.Result.Success:
                 Debug.Log("Received: " + webRequest.downloadHandler.text);
+                success = true;
                 callback(ProcessSuccess(webRequest.downloadHandler.text));
                 break;
         }
 
-
-        callback(new LatLong().ToVector2());
+        if (!success) {
+            Debug.LogError("Failed to get address: " + webRequest.error);
+            callback(new LatLong().ToVector2());
+        }
     }
 
     private Vector2 ProcessSuccess(string jsonString) {

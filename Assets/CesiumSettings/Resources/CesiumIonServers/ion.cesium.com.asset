@@ -15,5 +15,5 @@ MonoBehaviour:
   serverUrl: https://ion.cesium.com
   apiUrl: https://api.cesium.com
   oauth2ApplicationID: 381
-  defaultIonAccessTokenId: 
-  defaultIonAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MDgyZDVhMi0zYzMzLTQyNmItODEyYS1mOGFhNDQ2ZjNlNGYiLCJpZCI6MjM1MDI2LCJpYXQiOjE3MjQ2MDA2ODh9.h8T9jDRWVw9jRiSoZjixHs_6s9F0lWUBVvm3fIw8kT8
+  defaultIonAccessTokenId: 9c956d54-6215-4df2-8081-4a2b1414ddfb
+  defaultIonAccessToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5Yzk1NmQ1NC02MjE1LTRkZjItODA4MS00YTJiMTQxNGRkZmIiLCJpZCI6MzA3OTI0LCJpYXQiOjE3NDg2MzM3MTB9.KPCBiMPMQ8_kBRtA64wFIZvp86LmteJjqUw1dwTIDRY

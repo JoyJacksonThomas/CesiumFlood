@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0
   displacementAmt: 0
   floaters: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0.44
   displacementAmt: 1.6
   floaters: 4
@@ -4972,6 +4972,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5073,7 +5074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0.44
   displacementAmt: 1.3
   floaters: 4
@@ -5153,7 +5154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0.44
   displacementAmt: 1.3
   floaters: 4
@@ -5265,7 +5266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0.44
   displacementAmt: 1.6
   floaters: 4
@@ -5345,7 +5346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0
   displacementAmt: 0
   floaters: 0
@@ -10285,6 +10286,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15117,6 +15119,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15186,7 +15189,6 @@ GameObject:
   - component: {fileID: 8177662700478635158}
   - component: {fileID: 5537473305825151461}
   - component: {fileID: 1452136596151214516}
-  - component: {fileID: 6798351132795836377}
   - component: {fileID: 2599934952706587559}
   - component: {fileID: 7291897617296085023}
   m_Layer: 0
@@ -15249,6 +15251,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -15331,33 +15334,6 @@ MonoBehaviour:
       z: 3982856.7248188076
       w: 1
   _localToGlobeFixedMatrixIsValid: 1
---- !u!54 &6798351132795836377
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5157115093644458348}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.2
-  m_AngularDrag: 0.43
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &2599934952706587559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15407,6 +15383,7 @@ MonoBehaviour:
   motorSubmerged: 0
   particleRestingQuaternion: {x: 243.596, y: 0, z: 0}
   particleMovingQuaternion: {x: 190, y: 0, z: 0}
+  debugFloaterLocations: 0
 --- !u!114 &7291897617296085023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20228,6 +20205,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -20329,7 +20307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0
   displacementAmt: 0
   floaters: 0
@@ -25140,6 +25118,7 @@ ParticleSystemRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -25328,12 +25307,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!82 &6553561330452198164
 AudioSource:
   m_ObjectHideFlags: 0
@@ -25542,7 +25521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3591c924303f3c140abf7cd218945254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6798351132795836377}
+  rb: {fileID: 0}
   depthBefSub: 0
   displacementAmt: 0
   floaters: 0
