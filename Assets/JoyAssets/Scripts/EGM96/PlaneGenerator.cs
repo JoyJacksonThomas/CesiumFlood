@@ -1,31 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using CesiumForUnity;
 using Unity.Mathematics;
+using UnityEngine;
 
-public class PlaneGenerator : MonoBehaviour
-{
+public class PlaneGenerator : MonoBehaviour {
     public float waterHeight;
 
     public Material material;
     public GameObject EGM96_Tracer;
+    private readonly int[] triangles = new int[6];
+    private readonly Vector2[] uv = new Vector2[4];
+    private readonly Vector3[] vertDirections = new Vector3[4];
 
-    bool updateUndulation = false;
+    private readonly Vector3[] vertices = new Vector3[4];
 
-    Vector3[] vertices = new Vector3[4];
-    Vector2[] uv = new Vector2[4];
-    int[] triangles = new int[6];
-    Vector3[] vertDirections = new Vector3[4];
+    private Transform cameraTrans;
 
-    GameObject waterPlane;
+    private int currentVertIndex;
 
-    int currentVertIndex = 0;
+    private bool updateUndulation;
 
-    Transform cameraTrans;
+    private GameObject waterPlane;
 
-    private void Start()
-    {
+    private void Start() {
         cameraTrans = Camera.main.transform;
 
         vertices[0] = new Vector3(0, 0, 1);
@@ -45,7 +41,7 @@ public class PlaneGenerator : MonoBehaviour
         triangles[4] = 1;
         triangles[5] = 3;
 
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
 
         mesh.vertices = vertices;
         mesh.uv = uv;
@@ -70,28 +66,26 @@ public class PlaneGenerator : MonoBehaviour
         waterPlane.name = "WaterPlane";
     }
 
-    private void Update()
-    {
-        if (updateUndulation)
-        {
+    private void Update() {
+        if (updateUndulation) {
             Vector3 worldPt = waterPlane.transform.TransformPoint(vertices[currentVertIndex]);
             EGM96_Tracer.transform.position = worldPt;
         }
     }
-    private void LateUpdate()
-    {
-        if(updateUndulation)
-        {
-            EGM96_Tracer.GetComponent<GeoidHeightsDotNet.EGM96_Positioner>().UpdateUndulation();
-            double3 posEarth = EGM96_Tracer.GetComponent<CesiumGlobeAnchor>().positionGlobeFixed;
-            vertDirections[currentVertIndex] = new Vector3((float)posEarth.x, (float)posEarth.y, (float)posEarth.z).normalized;
 
-            vertices[currentVertIndex] = waterPlane.transform.InverseTransformPoint(EGM96_Tracer.transform.position + vertDirections[currentVertIndex] * waterHeight);
+    private void LateUpdate() {
+        if (updateUndulation) {
+            WaterLevelManager.Instance.UpdateWaterLevel();
+            double3 posEarth = EGM96_Tracer.GetComponent<CesiumGlobeAnchor>().positionGlobeFixed;
+            vertDirections[currentVertIndex] =
+                new Vector3((float)posEarth.x, (float)posEarth.y, (float)posEarth.z).normalized;
+
+            vertices[currentVertIndex] = waterPlane.transform.InverseTransformPoint(EGM96_Tracer.transform.position +
+                vertDirections[currentVertIndex] * waterHeight);
 
             currentVertIndex++;
-            
-            if(currentVertIndex >= vertices.Length)
-            {
+
+            if (currentVertIndex >= vertices.Length) {
                 waterPlane.GetComponent<MeshFilter>().mesh.vertices = vertices;
                 updateUndulation = false;
             }

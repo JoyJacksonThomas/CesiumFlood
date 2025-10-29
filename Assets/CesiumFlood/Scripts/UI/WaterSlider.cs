@@ -1,0 +1,75 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class WaterSlider : MonoBehaviour {
+    public WaterPlaneSpawner waterSpawner;
+
+
+    public float CurrentWaterHeight;
+    public float[] WaterHeights;
+
+    [TextArea]
+    public string[] WaterHeightMessages;
+
+    public TextMeshProUGUI TextBox;
+
+
+    [Header("UI")]
+    public RectTransform fillBox;
+
+    public Vector2 fillBoxHeightMinMax;
+    private Slider waterLevelSlider;
+
+    // Start is called before the first frame update
+    private void Awake() {
+        waterLevelSlider = GetComponent<Slider>();
+        waterLevelSlider.onValueChanged.AddListener(OnSliderValueChanged);
+        UpdateSliderValue();
+    }
+
+    // Update is called once per frame
+
+    private void OnSliderValueChanged(float value) {
+        AdjustWaterSlider(value);
+    }
+
+    public void AdjustWaterSlider(float lerpValue) {
+        CurrentWaterHeight = Mathf.Lerp(0, WaterHeights[WaterHeights.Length - 1], lerpValue);
+
+
+        float height = Mathf.Lerp(fillBoxHeightMinMax.x, fillBoxHeightMinMax.y, waterLevelSlider.normalizedValue);
+        fillBox.sizeDelta = new Vector2(fillBox.sizeDelta.x, height);
+
+        WaterLevelManager.Instance.SetWaterLevel(CurrentWaterHeight);
+    }
+
+    public void AdjustWaterToPresets(int direction) {
+        if (direction == 0)
+            return;
+        direction /= Mathf.Abs(direction);
+
+        for (int i = 0; i < WaterHeights.Length - 1; i++) {
+            if ((direction > 0 && CurrentWaterHeight >= WaterHeights[i] && CurrentWaterHeight < WaterHeights[i + 1])
+                || (direction < 0 && CurrentWaterHeight > WaterHeights[i] &&
+                    CurrentWaterHeight <= WaterHeights[i + 1])) {
+                int index = direction > 0
+                    ? Mathf.Clamp(i + direction, 0, WaterHeights.Length - 1)
+                    : Mathf.Clamp(i + 1 + direction, 0, WaterHeights.Length - 1);
+                CurrentWaterHeight = WaterHeights[index];
+
+                UpdateSliderValue();
+                UpdateTextBox(index);
+                return;
+            }
+        }
+    }
+
+    private void UpdateSliderValue() {
+        waterLevelSlider.value = Mathf.InverseLerp(0, WaterHeights[WaterHeights.Length - 1], CurrentWaterHeight);
+    }
+
+    private void UpdateTextBox(int messageIndex) {
+        TextBox.text = WaterHeightMessages[messageIndex];
+    }
+}
