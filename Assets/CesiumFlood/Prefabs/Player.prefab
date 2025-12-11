@@ -67,7 +67,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.03
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 45
   orthographic: 0
   orthographic size: 5
@@ -262,7 +262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2551321308716144189}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0000009041794, y: 0.000000043062315, z: -0.0001461002, w: 1}
+  m_LocalRotation: {x: 0.028891258, y: 0.0000042272573, z: -0.040666763, w: 0.998755}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -319,24 +319,24 @@ MonoBehaviour:
   _detectTransformChanges: 1
   _localToGlobeFixedMatrix:
     c0:
-      x: 0.4871908290239734
-      y: 0.11245037881190592
-      z: -0.00009176051855139337
+      x: 0.46183893638764045
+      y: 0.18949237572767288
+      z: -0.028238915917222347
       w: 0
     c1:
-      x: 0.08758131346546012
-      y: -0.37918953980482
-      z: 0.3139184709988791
+      x: 0.15149718399847134
+      y: -0.3161006922931716
+      z: 0.356551476738539
       w: 0
     c2:
-      x: -0.07053091270215288
-      y: 0.3058924732772416
-      z: 0.3891724362615283
+      x: -0.11727489106003398
+      y: 0.33789494205425386
+      z: 0.3493903376717322
       w: 0
     c3:
-      x: 1116873.4814434126
-      y: -4843875.757207846
-      z: 3982879.875876006
+      x: 1533023.8202616791
+      y: -4464098.395285291
+      z: 4275417.229544036
       w: 1
   _localToGlobeFixedMatrixIsValid: 1
 --- !u!114 &4846452711535471154
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bef32f31a547984f88be1ab98b65f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distance: 0
+  _distance: 100
 --- !u!1 &5395327000644487685
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 1844241392477962333}
   - component: {fileID: 2667733089693195576}
   - component: {fileID: 5161276171282437154}
-  - component: {fileID: 71927234805488202}
+  - component: {fileID: 5442474224457012603}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -439,6 +439,7 @@ MonoBehaviour:
   m_WalkMovement: {fileID: 722883465198524600}
   m_CameraController: {fileID: 630113611436993321}
   m_DroneMovement: {fileID: 7132194691934737303}
+  m_Anchor: {fileID: 5442474224457012603}
   movementType: 2
 --- !u!54 &2667733089693195576
 Rigidbody:
@@ -492,7 +493,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.87, z: 0}
---- !u!114 &71927234805488202
+--- !u!114 &5442474224457012603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -508,24 +509,24 @@ MonoBehaviour:
   _detectTransformChanges: 1
   _localToGlobeFixedMatrix:
     c0:
-      x: 0.9745147243897727
-      y: 0.22432354300771112
-      z: 0.000000000011670022343228045
+      x: 0.8732790361453845
+      y: 0.4550468827968667
+      z: -0.1741150697858127
       w: 0
     c1:
-      x: 0.17456039165173742
-      y: -0.7583317813473961
-      z: 0.6280617637341775
+      x: 0.41110800520697277
+      y: -0.4964071251964485
+      z: 0.7645718875171569
       w: 0
     c2:
-      x: -0.14088904007737682
-      y: 0.6120554365831286
-      z: 0.778163492419889
+      x: -0.2614840945983478
+      y: 0.7392647008766614
+      z: 0.6205753534681002
       w: 0
     c3:
-      x: 1116889.5996707522
-      y: -4843884.800469486
-      z: 3982856.724819348
+      x: 1533036.8441371631
+      y: -4464072.054859516
+      z: 4275425.058446209
       w: 1
   _localToGlobeFixedMatrixIsValid: 1
 --- !u!1001 &353287406801296831
@@ -673,26 +674,26 @@ MonoBehaviour:
   _detectTransformChanges: 1
   _localToGlobeFixedMatrix:
     c0:
-      x: 1
-      y: 0
-      z: 0
+      x: 0.9456665166475826
+      y: 0.32513818417387347
+      z: -0.00002199434055388699
       w: 0
     c1:
-      x: 0
-      y: 1
-      z: 0
+      x: 0.24032249426747618
+      y: -0.698933966259865
+      z: 0.6735995914171278
       w: 0
     c2:
-      x: 0
-      y: 0
-      z: 1
+      x: -0.21899757542195353
+      y: 0.63700586496545
+      z: 0.7390964686419033
       w: 0
     c3:
-      x: 0
-      y: 0
-      z: 0
+      x: 1533023.8202616791
+      y: -4464098.395285291
+      z: 4275417.229544036
       w: 1
-  _localToGlobeFixedMatrixIsValid: 0
+  _localToGlobeFixedMatrixIsValid: 1
 --- !u!114 &7132194691934737303 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7358182839347629608, guid: f2751760dd2deb743ac154736bac1eeb,

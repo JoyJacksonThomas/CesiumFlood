@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fed5b7bb874e9e41a282677972d186b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterLevel: -7
+  waterLevel: 0
+  waterPlaneAnchor: {fileID: 0}
   materialsWithWaterLevel:
   - {fileID: 2100000, guid: 263c7face7e43f34e82f8e23cb662469, type: 2}
   - {fileID: 2100000, guid: d903c72b6f662e54796754b52a0f3cc7, type: 2}

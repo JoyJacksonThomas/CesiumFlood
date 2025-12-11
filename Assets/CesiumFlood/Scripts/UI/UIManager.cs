@@ -1,22 +1,29 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CesiumFlood {
-
     public enum UIMenuState {
         None,
         Config,
         Menu
     }
-    public class UIManager : MonoSingleton<UIManager> {
 
+    [RequireComponent(typeof(AddressRequester))]
+    public class UIManager : MonoSingleton<UIManager> {
         [SerializeField]
         private GameObject configMenu;
 
         [SerializeField]
         private GameObject mainMenu;
 
+
+        private AddressRequester addressRequester;
+
         private UIMenuState currentMenuState = UIMenuState.Menu;
+
+        private void Start() {
+            addressRequester = GetComponent<AddressRequester>();
+            SetState(UIMenuState.Menu);
+        }
 
         public UIMenuState GetCurrentMenuState() {
             return currentMenuState;
@@ -30,7 +37,7 @@ namespace CesiumFlood {
             SetState(currentMenuState == UIMenuState.Menu ? UIMenuState.None : UIMenuState.Menu);
         }
 
-        void SetState(UIMenuState state) {
+        private void SetState(UIMenuState state) {
             currentMenuState = state;
             configMenu.SetActive(state == UIMenuState.Config);
             mainMenu.SetActive(state == UIMenuState.Menu);
@@ -46,14 +53,16 @@ namespace CesiumFlood {
             }
         }
 
-        void Start() {
-            SetState(UIMenuState.Menu);
-        }
-
         public void QuitApp() {
             Application.Quit();
         }
 
+        public AddressRequester GetAddressRequester() {
+            if (!addressRequester) {
+                Debug.LogError("AddressRequester not found");
+            }
 
+            return addressRequester;
+        }
     }
 }

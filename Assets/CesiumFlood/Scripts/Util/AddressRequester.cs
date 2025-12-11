@@ -1,16 +1,24 @@
+using System;
 using CesiumForUnity;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class AddressRequester : MonoBehaviour {
-    public Vector2 latLong;
+    [SerializeField]
+    private CesiumGlobeAnchor camAnchor;
 
-    public CesiumGlobeAnchor camAnchor;
+    [SerializeField]
+    private GeoCoder_V2 geoCoder;
 
-    public GeoCoder_V2 geoCoder;
+    [SerializeField]
+    private TMP_InputField addressInput;
 
-    public TMP_InputField addressInput;
+    [SerializeField]
+    private CF_PlayerController PC;
+
+    private Vector2 latLong;
+
 
     public void SearchAddress() {
         if (geoCoder == null) {
@@ -32,13 +40,22 @@ public class AddressRequester : MonoBehaviour {
         Debug.Log($"Received\tLat: [{_latLong.x}] \n" +
                   $"\t \t \tLong: [{_latLong.y}]");
 
-        if (camAnchor == null) {
-            Debug.LogError("CameraAnchor is null", this);
+        if (PC == null) {
+            Debug.LogError("Playercharacter is null", this);
             return;
         }
 
+        PC.SetGlobalPosition(_latLong);
         camAnchor.longitudeLatitudeHeight = new double3(_latLong.y, _latLong.x, 100);
         //waterAnchor.longitudeLatitudeHeight = new double3(latLong.y, latLong.x, 100);
         // camAnchor.gameObject.GetComponent<WaterPlaneSpawner>().CenterWaterOnCamera();
+    }
+
+    public void FindCurrentAddress(Action<string> Callback) {
+        if (geoCoder == null) {
+            Debug.LogError("GeoCoder is null", this);
+        }
+
+        geoCoder.RequestReverseAddressAsync(PC.GetGlobalPosition(), Callback);
     }
 }

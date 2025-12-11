@@ -1,4 +1,7 @@
 using CesiumFlood;
+using CesiumForUnity;
+using GeoidHeightsDotNet;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,10 +13,20 @@ public enum MovementType {
 
 [RequireComponent(typeof(PlayerInput))]
 public class CF_PlayerController : MonoBehaviour {
-    public BoatMovement m_BoatMovement;
-    public TPS_Player_NEW m_WalkMovement;
-    public TPS_CameraController m_CameraController;
-    public DroneMovement m_DroneMovement;
+    [SerializeField]
+    private BoatMovement m_BoatMovement;
+
+    [SerializeField]
+    private TPS_Player_NEW m_WalkMovement;
+
+    [SerializeField]
+    private TPS_CameraController m_CameraController;
+
+    [SerializeField]
+    private DroneMovement m_DroneMovement;
+
+    [SerializeField]
+    private CesiumGlobeAnchor m_Anchor;
 
     [SerializeField]
     private MovementType movementType = MovementType.Drone;
@@ -31,6 +44,9 @@ public class CF_PlayerController : MonoBehaviour {
         m_UIManager = UIManager.Instance;
 
         m_CharacterController = GetComponent<CharacterController>();
+
+        m_Anchor = GetComponent<CesiumGlobeAnchor>();
+
         HandleEnterMovementState(movementType, true);
     }
 
@@ -196,5 +212,22 @@ public class CF_PlayerController : MonoBehaviour {
         // Handle entering the new movement state here
         Debug.Log("Entering movement state: " + newMovementType);
         // You can add logic to switch animations, physics, etc. based on the movement type
+    }
+
+    public void SetGlobalPosition(Vector2 latLong) {
+        double undulation = GeoidHeights.undulation(latLong.x, latLong.y);
+        m_Anchor.longitudeLatitudeHeight = new double3(latLong.y, latLong.x, undulation + 10f);
+        transform.position = Vector3.zero;
+        m_BoatMovement.transform.position = Vector3.zero;
+        m_CharacterController.transform.position = Vector3.zero;
+        m_DroneMovement.transform.position = Vector3.zero;
+    }
+
+    public Vector2 GetGlobalPosition() {
+        if (m_Anchor) {
+            return new Vector2((float)m_Anchor.longitudeLatitudeHeight.y, (float)m_Anchor.longitudeLatitudeHeight.x);
+        }
+
+        return new Vector2(38.8973575f, -77.0327477f);
     }
 }
