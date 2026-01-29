@@ -12,6 +12,13 @@ public class CurrentAddressDisplay : MonoBehaviour {
 
     private void LookupCurrentAddress() {
         AddressRequester Requester = UIManager.Instance.GetAddressRequester();
+
+        if (Requester && !Requester.IsSetup()) {
+            Debug.LogError("AddressRequester was not setup correctly. Current Address will not update", this);
+            CancelInvoke(nameof(LookupCurrentAddress));
+            return;
+        }
+
         Requester.FindCurrentAddress(HandleFoundAddress);
     }
 

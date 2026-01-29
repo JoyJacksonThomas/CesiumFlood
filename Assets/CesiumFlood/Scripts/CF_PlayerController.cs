@@ -34,13 +34,11 @@ public class CF_PlayerController : MonoBehaviour {
     private CF_InputControls controls;
 
     private CharacterController m_CharacterController;
+
+    private PlayerInput m_PlayerInput;
     private UIManager m_UIManager;
 
     private void Awake() {
-        controls = new CF_InputControls();
-
-        controls.Player.SelectMovementType.performed += OnChangeMovementType;
-
         m_UIManager = UIManager.Instance;
 
         m_CharacterController = GetComponent<CharacterController>();
@@ -48,19 +46,29 @@ public class CF_PlayerController : MonoBehaviour {
         m_Anchor = GetComponent<CesiumGlobeAnchor>();
 
         HandleEnterMovementState(movementType, true);
+
+        m_PlayerInput = GetComponent<PlayerInput>();
+        m_UIManager.SetPlayerInput(m_PlayerInput);
     }
 
     private void OnEnable() {
-        controls.Enable();
+        // controls.Enable();
+        // m_PlayerInput.actions.FindActionMap("UI").Enable();
+        m_PlayerInput.actions["SelectMovementType"].performed +=
+            OnChangeMovementType;
     }
 
     private void OnDisable() {
-        controls.Disable();
+        // controls.Disable();
+        // m_PlayerInput.actions.FindActionMap("UI").Disable();
+        m_PlayerInput.actions["SelectMovementType"].performed -=
+            OnChangeMovementType;
     }
 
     public void OnToggleConfigMenu(InputValue value) {
         m_UIManager.ToggleConfigMenu();
     }
+
 
     public void OnToggleMainMenu(InputValue value) {
         m_UIManager.ToggleMainMenu();

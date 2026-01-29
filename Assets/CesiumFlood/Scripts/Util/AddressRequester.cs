@@ -51,9 +51,19 @@ public class AddressRequester : MonoBehaviour {
         // camAnchor.gameObject.GetComponent<WaterPlaneSpawner>().CenterWaterOnCamera();
     }
 
+    public bool IsSetup() {
+        return geoCoder != null && addressInput != null && PC;
+    }
+
     public void FindCurrentAddress(Action<string> Callback) {
-        if (geoCoder == null) {
+        if (!geoCoder) {
             Debug.LogError("GeoCoder is null", this);
+            return;
+        }
+
+        if (!PC) {
+            Debug.LogError("PlayerCharacter is null", this);
+            return;
         }
 
         geoCoder.RequestReverseAddressAsync(PC.GetGlobalPosition(), Callback);
