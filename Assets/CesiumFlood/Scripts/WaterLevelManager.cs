@@ -29,4 +29,8 @@ public class WaterLevelManager : MonoSingleton<WaterLevelManager> {
     public void UpdateWaterLevel() {
         SetWaterLevel(waterLevel);
     }
+
+    public float GetWaterPlaneHeight() {
+        return waterPlaneAnchor.transform.position.y;
+    }
 }
