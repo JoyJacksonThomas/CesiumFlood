@@ -1,4 +1,5 @@
 #region Defines
+
 #if UNITY_2020 || UNITY_2021 || UNITY_2022 || UNITY_2023 || UNITY_2024 || UNITY_2025
 #define UNITY_2020_PLUS
 #endif
@@ -45,6 +46,7 @@
 #pragma warning disable 0618
 #pragma warning disable 0649
 #pragma warning disable 0067
+
 #endregion
 
 
@@ -84,11 +86,14 @@ public class TPS_CameraController : MonoBehaviour {
 
     private readonly float[] zOffSetQueue = new float[10];
     private int currentQueueIndex;
+
+    private Vector3 originalOffset;
     private Quaternion originalRotation;
 
 
     private void Start() {
         originalRotation = transform.localRotation;
+        originalOffset = transform.position;
         zOffset = maxOffSet_Z;
         for (int i = 0; i < 10; i++) {
             zOffSetQueue[i] = zOffset;
@@ -129,7 +134,7 @@ public class TPS_CameraController : MonoBehaviour {
             raysCollided = true;
         }
 
-        if (raysCollided == false) {
+        if (!raysCollided) {
             zOffset = Mathf.MoveTowards(zOffset, maxOffSet_Z, .7f);
         }
 

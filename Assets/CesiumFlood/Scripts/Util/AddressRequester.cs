@@ -1,7 +1,6 @@
 using System;
 using CesiumForUnity;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class AddressRequester : MonoBehaviour {
@@ -46,7 +45,7 @@ public class AddressRequester : MonoBehaviour {
         }
 
         PC.SetGlobalPosition(_latLong);
-        camAnchor.longitudeLatitudeHeight = new double3(_latLong.y, _latLong.x, 100);
+        // camAnchor.longitudeLatitudeHeight = new double3(_latLong.y, _latLong.x, 100);
         //waterAnchor.longitudeLatitudeHeight = new double3(latLong.y, latLong.x, 100);
         // camAnchor.gameObject.GetComponent<WaterPlaneSpawner>().CenterWaterOnCamera();
     }

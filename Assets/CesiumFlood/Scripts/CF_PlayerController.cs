@@ -29,6 +29,9 @@ public class CF_PlayerController : MonoBehaviour {
     private CesiumGlobeAnchor m_Anchor;
 
     [SerializeField]
+    private CesiumGlobeAnchor m_WaterAnchor;
+
+    [SerializeField]
     private MovementType movementType = MovementType.Drone;
 
     private CF_InputControls controls;
@@ -175,7 +178,7 @@ public class CF_PlayerController : MonoBehaviour {
         }
 
         // Exit the old movement state if necessary
-        // Enter New Movement State
+
         movementType = newMovementType;
 
         switch (oldMovementType) {
@@ -197,6 +200,7 @@ public class CF_PlayerController : MonoBehaviour {
                 break;
         }
 
+        // Enter New Movement State
         switch (movementType) {
             case MovementType.Walk:
                 m_WalkMovement.gameObject.SetActive(true);
@@ -217,18 +221,22 @@ public class CF_PlayerController : MonoBehaviour {
                 break;
         }
 
-        // Handle entering the new movement state here
         Debug.Log("Entering movement state: " + newMovementType);
-        // You can add logic to switch animations, physics, etc. based on the movement type
     }
 
     public void SetGlobalPosition(Vector2 latLong) {
         double undulation = GeoidHeights.undulation(latLong.x, latLong.y);
-        m_Anchor.longitudeLatitudeHeight = new double3(latLong.y, latLong.x, undulation + 10f);
-        transform.position = Vector3.zero;
-        m_BoatMovement.transform.position = Vector3.zero;
-        m_CharacterController.transform.position = Vector3.zero;
-        m_DroneMovement.transform.position = Vector3.zero;
+
+        double3 newPosition = new(latLong.y, latLong.x, undulation);
+
+        double3 newPosECEF = CesiumWgs84Ellipsoid.LongitudeLatitudeHeightToEarthCenteredEarthFixed(newPosition);
+
+        m_Anchor.positionGlobeFixed = newPosECEF + new double3(0, 50, 0);
+        m_WaterAnchor.positionGlobeFixed = newPosECEF;
+        m_Anchor.Sync();
+        m_WaterAnchor.Sync();
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        m_CameraController.transform.rotation = transform.rotation;
     }
 
     public Vector2 GetGlobalPosition() {
