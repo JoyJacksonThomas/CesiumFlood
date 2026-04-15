@@ -113,7 +113,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _Alpha: 0
+    - _Alpha: 0.419
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Ambient: 1
@@ -133,7 +133,7 @@ Material:
     - _FoamCutoff: 17.2
     - _FoamScale: 3534.71
     - _FoamSpeed: 0.5
-    - _FoamTiling: 1
+    - _FoamTiling: 0.125
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -144,7 +144,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: -1
     - _ReceiveShadows: 1
-    - _RefractionScale: -0.08
+    - _RefractionScale: -0.01
     - _RefractionSpeed: 0.05
     - _RefractionStrength: 1
     - _RippleStrength: -0.4
@@ -158,10 +158,10 @@ Material:
     - _WaveAmplitude: 2
     - _WaveAmplitude_1: 1
     - _WaveAmplitude_2: 0.5
-    - _WaveFrequency: 0.1
+    - _WaveFrequency: 0.2
     - _WaveFrequency_1: 0.15
     - _WaveFrequency_2: 0.4
-    - _WaveScale: 0.2
+    - _WaveScale: 0.01
     - _WaveSpeed: 1
     - _WaveSpeed_1: -1
     - _WaveSpeed_2: -2
@@ -176,6 +176,6 @@ Material:
     - _FoamDirection: {r: 1, g: 1, b: 0, a: 0}
     - _ShallowWater: {r: 0, g: 0.026579533, b: 0.23921564, a: 0.9882353}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
+    - _SpecularColor: {r: 0.036712352, g: 0.26026812, b: 0.31132078, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -1,3 +1,4 @@
+using System.Collections;
 using CesiumFlood;
 using CesiumForUnity;
 using GeoidHeightsDotNet;
@@ -232,12 +233,20 @@ public class CF_PlayerController : MonoBehaviour {
         double3 newPosECEF = CesiumWgs84Ellipsoid.LongitudeLatitudeHeightToEarthCenteredEarthFixed(newPosition);
 
         m_Anchor.positionGlobeFixed = newPosECEF + new double3(0, 50, 0);
+
         m_WaterAnchor.positionGlobeFixed = newPosECEF;
         m_Anchor.Sync();
         m_WaterAnchor.Sync();
-        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        m_CameraController.transform.rotation = transform.rotation;
+
+        StartCoroutine(ResetOffsets());
     }
+
+    private IEnumerator ResetOffsets() {
+        yield return new WaitForSeconds(0.2f);
+        transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+        m_CameraController.transform.position = new Vector3(0f, 0f, 0f);
+    }
+
 
     public Vector2 GetGlobalPosition() {
         if (m_Anchor) {
