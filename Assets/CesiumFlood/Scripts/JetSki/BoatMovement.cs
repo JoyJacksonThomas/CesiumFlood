@@ -153,7 +153,7 @@ public class BoatMovement : MonoBehaviour {
         //    rightSplash.Stop();
         //}
 
-        transform.parent.position = transform.position;
+        // transform.parent.position = transform.position;
     }
 
     private void FixedUpdate() {
