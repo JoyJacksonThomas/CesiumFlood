@@ -154,6 +154,20 @@ public class DroneMovement : MonoBehaviour {
             // Apply movement with Time.deltaTime for frame-rate independence
             transform.parent.position += delta.normalized * currentSpeed * Time.deltaTime;
         }
+
+        ClampToWaterLevel();
+    }
+
+    private void ClampToWaterLevel() {
+        if (WaterLevelManager.Instance == null) return;
+
+        float waterLevel = WaterLevelManager.Instance.GetWaterPlaneHeight();
+        Vector3 position = transform.parent.position;
+
+        if (position.y < waterLevel) {
+            position.y = waterLevel;
+            transform.parent.position = position;
+        }
     }
 
     public void OnEnterMovementState() {

@@ -27,6 +27,10 @@ public class WaterLevelManager : MonoSingleton<WaterLevelManager> {
     }
 
     public void UpdateWaterLevel() {
+        if (waterPlaneAnchor != null) {
+            waterPlaneAnchor.Sync();
+        }
+
         SetWaterLevel(waterLevel);
     }
 

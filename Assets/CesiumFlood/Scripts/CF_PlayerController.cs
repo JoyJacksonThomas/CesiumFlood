@@ -228,11 +228,11 @@ public class CF_PlayerController : MonoBehaviour {
     public void SetGlobalPosition(Vector2 latLong) {
         double undulation = GeoidHeights.undulation(latLong.x, latLong.y);
 
-        double3 newPosition = new(latLong.y, latLong.x, undulation);
+        double3 newPosition = new(latLong.y, latLong.x, undulation + 10);
 
         double3 newPosECEF = CesiumWgs84Ellipsoid.LongitudeLatitudeHeightToEarthCenteredEarthFixed(newPosition);
 
-        m_Anchor.positionGlobeFixed = newPosECEF + new double3(0, 50, 0);
+        m_Anchor.positionGlobeFixed = newPosECEF;
 
         m_WaterAnchor.positionGlobeFixed = newPosECEF;
         m_Anchor.Sync();
@@ -245,6 +245,9 @@ public class CF_PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
         m_CameraController.transform.position = new Vector3(0f, 0f, 0f);
+        if (WaterLevelManager.Instance != null) {
+            WaterLevelManager.Instance.UpdateWaterLevel();
+        }
     }
 
 

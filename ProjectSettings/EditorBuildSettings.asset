@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/JoyAssets/Scenes/JetSki.unity
     guid: 4e777e35c38efdd43a7b1ee4c93d9018
+  - enabled: 1
+    path: Assets/CesiumFlood/Scenes/GeolocatorScene.unity
+    guid: fb209a78009452545b53dcd5984724c7
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 3746a0007811dcb49a6a7d46827ee257,
       type: 2}
