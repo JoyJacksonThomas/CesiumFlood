@@ -255,6 +255,7 @@ public class CF_PlayerController : MonoBehaviour {
             WaterLevelManager.Instance.UpdateWaterLevel();
         }
 
+        yield return new WaitForSeconds(0.3f);
         //attempt to find the surface
         for (int i = 0; i < 4; i++) {
             if (TryApplyOffset()) {
@@ -303,7 +304,7 @@ public class CF_PlayerController : MonoBehaviour {
             return true;
         }
 
-        Debug.Log("failed to hit surface above player");
+        // Debug.Log("failed to hit surface above player");
         distance = 0f;
         return false;
     }
@@ -322,7 +323,7 @@ public class CF_PlayerController : MonoBehaviour {
             return true;
         }
 
-        Debug.Log("failed to hit surface below player");
+        // Debug.Log("failed to hit surface below player");
         distance = 0f;
         return false;
     }

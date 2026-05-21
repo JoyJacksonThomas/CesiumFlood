@@ -37,7 +37,7 @@ public class GeoCoder_V2 : MonoBehaviour {
                 Debug.LogError("HTTP Error: " + webRequest.error);
                 break;
             case UnityWebRequest.Result.Success:
-                Debug.Log("Received: " + webRequest.downloadHandler.text);
+                // Debug.Log("Received: " + webRequest.downloadHandler.text);
                 success = true;
                 callback(ProcessGeocodeSuccess(webRequest.downloadHandler.text));
                 break;
@@ -70,7 +70,7 @@ public class GeoCoder_V2 : MonoBehaviour {
                 Debug.LogError("HTTP Error: " + webRequest.error);
                 break;
             case UnityWebRequest.Result.Success:
-                Debug.Log("Received: " + webRequest.downloadHandler.text);
+                // Debug.Log("Received: " + webRequest.downloadHandler.text);
                 success = true;
                 callback(ProcessReverseSuccess(webRequest.downloadHandler.text));
                 break;
@@ -89,9 +89,6 @@ public class GeoCoder_V2 : MonoBehaviour {
         float x = float.Parse(results.GetJSON(0).GetString("lat"));
         float y = float.Parse(results.GetJSON(0).GetString("lon"));
 
-
-        Debug.Log(x.ToString());
-        Debug.Log(y.ToString());
         // LatLong result = JsonUtility.FromJson<LatLong>(jsonString);
         return new Vector2(x, y);
     }

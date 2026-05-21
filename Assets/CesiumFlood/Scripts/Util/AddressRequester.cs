@@ -36,8 +36,8 @@ public class AddressRequester : MonoBehaviour {
     }
 
     private void OnAddressResponse(Vector2 _latLong) {
-        Debug.Log($"Received\tLat: [{_latLong.x}] \n" +
-                  $"\t \t \tLong: [{_latLong.y}]");
+        // Debug.Log($"Received\tLat: [{_latLong.x}] \n" +
+        //           $"\t \t \tLong: [{_latLong.y}]");
 
         if (PC == null) {
             Debug.LogError("Playercharacter is null", this);
