@@ -35,6 +35,12 @@ public class CF_PlayerController : MonoBehaviour {
     [SerializeField]
     private MovementType movementType = MovementType.Drone;
 
+    [SerializeField]
+    private LayerMask surfaceCheckLayerMask = -1;
+
+    [SerializeField]
+    private float yOffset = 10f;
+
     private CF_InputControls controls;
 
     private CharacterController m_CharacterController;
@@ -248,6 +254,77 @@ public class CF_PlayerController : MonoBehaviour {
         if (WaterLevelManager.Instance != null) {
             WaterLevelManager.Instance.UpdateWaterLevel();
         }
+
+        //attempt to find the surface
+        for (int i = 0; i < 4; i++) {
+            if (TryApplyOffset()) {
+                yield break;
+            }
+
+            if (i < 3) {
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
+        Debug.LogError("ResetOffsets: Failed to find surface after 4 attempts.");
+    }
+
+    private bool TryApplyOffset() {
+        //if far above surface, reset to yOffset above surface
+        bool aboveSurface = AboveSurfaceCheck(out float distToGround);
+        if (aboveSurface && distToGround > 50f) {
+            transform.position = new Vector3(transform.position.x, transform.position.y - distToGround + yOffset,
+                transform.position.z);
+            return true;
+        }
+
+        //if below the surface, move to yOffset above the surface
+        bool belowSurface = BelowSurfaceCheck(out float distance);
+        if (belowSurface) {
+            transform.position = new Vector3(transform.position.x, transform.position.y + distance + yOffset,
+                transform.position.z);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool BelowSurfaceCheck(out float distance) {
+        // Sphere cast from above the player downward so we hit the top side of the surface
+        float sphereRadius = m_CharacterController != null ? m_CharacterController.radius : 0.5f;
+        float maxDistance = 10000f;
+        Vector3 direction = -transform.up;
+        Vector3 origin = transform.position - direction * maxDistance;
+
+        if (Physics.SphereCast(origin, sphereRadius, direction, out RaycastHit hit, maxDistance,
+                surfaceCheckLayerMask)) {
+            Debug.Log($"Hit surface above player at distance: {hit.distance}, object: {hit.collider.name}");
+            distance = maxDistance - hit.distance;
+            return true;
+        }
+
+        Debug.Log("failed to hit surface above player");
+        distance = 0f;
+        return false;
+    }
+
+    private bool AboveSurfaceCheck(out float distance) {
+        // Sphere cast down from the player to ensure we're close to the ground
+        float sphereRadius = m_CharacterController != null ? m_CharacterController.radius : 0.5f;
+        float maxDistance = 10000f;
+        Vector3 direction = -transform.up;
+        Vector3 origin = transform.position - direction;
+
+        if (Physics.SphereCast(origin, sphereRadius, direction, out RaycastHit hit, maxDistance,
+                surfaceCheckLayerMask)) {
+            Debug.Log($"Hit surface above below at distance: {hit.distance}, object: {hit.collider.name}");
+            distance = hit.distance;
+            return true;
+        }
+
+        Debug.Log("failed to hit surface below player");
+        distance = 0f;
+        return false;
     }
 
 
