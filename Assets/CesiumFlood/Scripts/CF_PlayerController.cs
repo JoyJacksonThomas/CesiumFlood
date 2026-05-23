@@ -41,6 +41,9 @@ public class CF_PlayerController : MonoBehaviour {
     [SerializeField]
     private float yOffset = 10f;
 
+    [SerializeField]
+    private InputDisplay m_InputDisplay;
+
     private CF_InputControls controls;
 
     private CharacterController m_CharacterController;
@@ -59,6 +62,9 @@ public class CF_PlayerController : MonoBehaviour {
 
         m_PlayerInput = GetComponent<PlayerInput>();
         m_UIManager.SetPlayerInput(m_PlayerInput);
+        if (!m_InputDisplay) {
+            Debug.LogWarning("No input display attached");
+        }
     }
 
     private void OnEnable() {
@@ -226,6 +232,10 @@ public class CF_PlayerController : MonoBehaviour {
             default:
                 Debug.LogWarning("Unknown movement type: " + oldMovementType);
                 break;
+        }
+
+        if (m_InputDisplay != null) {
+            m_InputDisplay.SetMode(movementType);
         }
 
         Debug.Log("Entering movement state: " + newMovementType);

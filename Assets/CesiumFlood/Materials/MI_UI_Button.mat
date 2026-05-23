@@ -48,8 +48,8 @@ Material:
     m_Floats:
     - _Active: 1
     - _ColorMask: 15
-    - _CornerRadius: 0
-    - _OutlineThickness: 0.04
+    - _CornerRadius: 0.2
+    - _OutlineThickness: 0.1
     - _Pressed: 0
     - _Selected: 0
     - _State: 0
@@ -60,11 +60,13 @@ Material:
     - _StencilWriteMask: 255
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
+    - _bUseShadow: 0
     m_Colors:
+    - _ButtonColor: {r: 0.19607845, g: 0.6392157, b: 0.6117647, a: 1}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.3176471, g: 1, b: 0.78120756, a: 0}
     - _Dimensions: {r: 0.9, g: 0.9, b: 0, a: 0}
-    - _Outline_Color: {r: 0, g: 0, b: 0, a: 1}
+    - _Outline_Color: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 1}
     - _RectTransformInfo: {r: 100, g: 100, b: 1, a: 100}
     - _RectTransformSize: {r: 100, g: 500, b: 0, a: 0}
     - _ShadowOffset: {r: 0, g: 0, b: 0, a: 0}

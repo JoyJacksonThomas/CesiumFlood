@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MI_UI_Backer
-  m_Shader: {fileID: -6465566751694194690, guid: b847b27820757cf4197d40b2266a29e9,
+  m_Shader: {fileID: -6465566751694194690, guid: 16e70e17edcdc1f4dbb97aa44cec00cf,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -46,7 +46,10 @@ Material:
     - _BubbleOutlineThickness: 0.015
     - _Bubble_Outline_Thickness: 0
     - _ColorMask: 15
+    - _CornerRadius: 0.1
+    - _OutlineThickness: 0.02
     - _Radius: 0.1
+    - _ShadowFeather: 0.04
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -56,7 +59,9 @@ Material:
     - _Transparent_Background: 1
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
+    - _bUseShadow: 1
     m_Colors:
+    - _BGColor: {r: 0.98039216, g: 0.9607843, b: 0.8745098, a: 1}
     - _BackgroundColor1: {r: 0, g: 0, b: 0, a: 1}
     - _BackgroundColor2: {r: 0, g: 0, b: 0, a: 1}
     - _Background_Color_1: {r: 0, g: 0, b: 0, a: 1}
@@ -68,9 +73,13 @@ Material:
     - _Bubble_Outline_Color: {r: 0.19215688, g: 0.6392157, b: 0.6117647, a: 1}
     - _Bubble_Size: {r: 0.9, g: 0.9, b: 0, a: 0}
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
+    - _Dimensions: {r: 0.9, g: 0.9, b: 0, a: 0}
+    - _Outline_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
     - _RectTransformInfo: {r: 100, g: 100, b: 1, a: 100}
-    - _RectTransformSize: {r: 100, g: 100, b: 0, a: 0}
-    - _WidthHeight: {r: 1800, g: 350, b: 0, a: 0}
-    - _Width_Height: {r: 1801, g: 350, b: 0, a: 0}
+    - _RectTransformSize: {r: 100, g: 500, b: 0, a: 0}
+    - _ShadowOffset: {r: 0, g: 0.005, b: 0, a: 0}
+    - _Shadow_Color: {r: 0, g: 0, b: 0, a: 0.36078432}
+    - _WidthHeight: {r: 301, g: 100, b: 0, a: 0}
+    - _Width_Height: {r: 300, g: 100, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

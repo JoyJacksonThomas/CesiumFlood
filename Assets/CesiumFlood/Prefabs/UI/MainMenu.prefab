@@ -38,7 +38,7 @@ RectTransform:
   m_Father: {fileID: 2004804015008982314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.6}
   m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: -60, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -211,6 +211,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -301,7 +302,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 6.799988}
+  m_AnchoredPosition: {x: 150, y: 0}
   m_SizeDelta: {x: 300, y: 600}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3215694865601087525
@@ -700,6 +701,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: -9
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -954,6 +956,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1024,7 +1027,7 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 360, y: 360.00006}
-  m_Pivot: {x: 0.5, y: 0.75}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6330252716960152152
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1512,7 +1515,7 @@ PrefabInstance:
     - target: {fileID: 1265286068571112065, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
         type: 3}
       propertyPath: m_text
-      value: Controls
+      value: Credits
       objectReference: {fileID: 0}
     - target: {fileID: 1265286068571112065, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
         type: 3}
@@ -1639,7 +1642,7 @@ PrefabInstance:
     - target: {fileID: 8175666175402987461, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

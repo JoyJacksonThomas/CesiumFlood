@@ -84,7 +84,10 @@ public class GeoCoder_V2 : MonoBehaviour {
 
     private Vector2 ProcessGeocodeSuccess(string jsonString) {
         JArray results = JArray.ParseString(jsonString);
-
+        if (results.IsEmpty()) {
+            Debug.LogError("result was empty");
+            return new Vector2(0, 0);
+        }
 
         float x = float.Parse(results.GetJSON(0).GetString("lat"));
         float y = float.Parse(results.GetJSON(0).GetString("lon"));
