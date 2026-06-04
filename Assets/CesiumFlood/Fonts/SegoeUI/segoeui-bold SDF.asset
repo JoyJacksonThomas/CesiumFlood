@@ -6,7 +6,7 @@ Texture2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: segoeui SDF Atlas
+  m_Name: segoeuib SDF Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -56,39 +56,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: segoeui SDF
+  m_Name: segoeui-bold SDF
   m_EditorClassIdentifier: 
   m_Version: 1.1.0
   m_FaceInfo:
     m_FaceIndex: 0
-    m_FamilyName: Segoe UI
-    m_StyleName: Regular
+    m_FamilyName: Segoe UI This
+    m_StyleName: Bold
     m_PointSize: 155
     m_Scale: 1
     m_UnitsPerEM: 2048
-    m_LineHeight: 206.16211
-    m_AscentLine: 167.26074
-    m_CapLine: 109
-    m_MeanLine: 78
+    m_LineHeight: 191.53125
+    m_AscentLine: 155.39062
+    m_CapLine: 101
+    m_MeanLine: 72
     m_Baseline: 0
-    m_DescentLine: -38.901367
-    m_SuperscriptOffset: 167.26074
+    m_DescentLine: -36.140625
+    m_SuperscriptOffset: 155.39062
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -38.901367
+    m_SubscriptOffset: -36.140625
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -17.937012
-    m_UnderlineThickness: 9.006348
-    m_StrikethroughOffset: 31.2
-    m_StrikethroughThickness: 9.006348
-    m_TabWidth: 42
+    m_UnderlineOffset: -16.664062
+    m_UnderlineThickness: 8.3671875
+    m_StrikethroughOffset: 28.8
+    m_StrikethroughThickness: 8.3671875
+    m_TabWidth: 40
   m_Material: {fileID: 1553473901519571282}
-  m_SourceFontFileGUID: ae6531f38d6f28f4dbff9588d7c735be
+  m_SourceFontFileGUID: c9da0f244de640a4f986079752c829eb
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: ae6531f38d6f28f4dbff9588d7c735be
+    sourceFontFileGUID: c9da0f244de640a4f986079752c829eb
     faceIndex: 0
     pointSizeSamplingMode: 0
-    pointSize: 155
+    pointSize: 144
     padding: 9
     paddingMode: 2
     packingMode: 0
@@ -96,13 +96,13 @@ MonoBehaviour:
     atlasHeight: 1024
     characterSetSelectionMode: 0
     characterSequence: 32 - 126, 160, 8203, 8230, 9633
-    referencedFontAssetGUID: 41d10f0508c0baf4c8a0b8c6484225ff
+    referencedFontAssetGUID: 3943d9e03308b1c47a9789312730b395
     referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
     renderMode: 4165
     includeFontFeatures: 0
-  m_SourceFontFile: {fileID: 12800000, guid: ae6531f38d6f28f4dbff9588d7c735be, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: c9da0f244de640a4f986079752c829eb, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
@@ -16946,21 +16946,6 @@ MonoBehaviour:
           m_YAdvance: 0
       m_FeatureLookupFlags: 0
     - m_FirstAdjustmentRecord:
-        m_GlyphIndex: 62
-        m_GlyphValueRecord:
-          m_XPlacement: 0
-          m_YPlacement: 0
-          m_XAdvance: 17.634277
-          m_YAdvance: 0
-      m_SecondAdjustmentRecord:
-        m_GlyphIndex: 356
-        m_GlyphValueRecord:
-          m_XPlacement: 0
-          m_YPlacement: 0
-          m_XAdvance: 0
-          m_YAdvance: 0
-      m_FeatureLookupFlags: 0
-    - m_FirstAdjustmentRecord:
         m_GlyphIndex: 69
         m_GlyphValueRecord:
           m_XPlacement: 0
@@ -28234,21 +28219,6 @@ MonoBehaviour:
           m_YAdvance: 0
       m_SecondAdjustmentRecord:
         m_GlyphIndex: 34
-        m_GlyphValueRecord:
-          m_XPlacement: 0
-          m_YPlacement: 0
-          m_XAdvance: 0
-          m_YAdvance: 0
-      m_FeatureLookupFlags: 0
-    - m_FirstAdjustmentRecord:
-        m_GlyphIndex: 388
-        m_GlyphValueRecord:
-          m_XPlacement: 0
-          m_YPlacement: 0
-          m_XAdvance: 10.671387
-          m_YAdvance: 0
-      m_SecondAdjustmentRecord:
-        m_GlyphIndex: 64
         m_GlyphValueRecord:
           m_XPlacement: 0
           m_YPlacement: 0
@@ -107041,7 +107011,7 @@ MonoBehaviour:
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 3943d9e03308b1c47a9789312730b395, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}

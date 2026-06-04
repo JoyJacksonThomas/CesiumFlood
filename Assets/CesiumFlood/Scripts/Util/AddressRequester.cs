@@ -16,6 +16,8 @@ public class AddressRequester : MonoBehaviour {
     [SerializeField]
     private CF_PlayerController PC;
 
+    private string lastSearch;
+
     private Vector2 latLong;
 
 
@@ -30,9 +32,15 @@ public class AddressRequester : MonoBehaviour {
             return;
         }
 
+        if (addressInput.text.Length == 0 || addressInput.text.Equals(lastSearch)) {
+            // early exit for no or repeat input
+            return;
+        }
+
 
         Debug.Log("Searching for " + addressInput.text);
         geoCoder.RequestLatLongAsync(addressInput.text, OnAddressResponse);
+        lastSearch = addressInput.text;
     }
 
     private void OnAddressResponse(Vector2 _latLong) {

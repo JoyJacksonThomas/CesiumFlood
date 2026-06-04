@@ -17,6 +17,9 @@ namespace CesiumFlood {
         private GameObject mainMenu;
 
         [SerializeField]
+        private GameObject creditsMenu;
+
+        [SerializeField]
         private GameObject currentAddressDisplay;
 
 
@@ -49,10 +52,16 @@ namespace CesiumFlood {
             SetState(currentMenuState == UIMenuState.Menu ? UIMenuState.None : UIMenuState.Menu);
         }
 
+        public void ToggleCreditsMenu() {
+            if (currentMenuState != UIMenuState.Menu) return;
+            creditsMenu.SetActive(!creditsMenu.activeSelf);
+        }
+
         private void SetState(UIMenuState state) {
             currentMenuState = state;
             configMenu.SetActive(state == UIMenuState.Config);
             mainMenu.SetActive(state == UIMenuState.Menu);
+            creditsMenu.SetActive(false);
             currentAddressDisplay.SetActive(state == UIMenuState.None || state == UIMenuState.Config);
 
 
