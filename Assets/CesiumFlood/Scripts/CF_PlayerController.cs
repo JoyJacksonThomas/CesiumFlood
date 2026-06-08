@@ -58,13 +58,15 @@ public class CF_PlayerController : MonoBehaviour {
 
         m_Anchor = GetComponent<CesiumGlobeAnchor>();
 
-        HandleEnterMovementState(movementType, true);
-
         m_PlayerInput = GetComponent<PlayerInput>();
         m_UIManager.SetPlayerInput(m_PlayerInput);
         if (!m_InputDisplay) {
             Debug.LogWarning("No input display attached");
         }
+    }
+
+    private void Start() {
+        HandleEnterMovementState(movementType, true);
     }
 
     private void OnEnable() {

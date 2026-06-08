@@ -93,6 +93,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3793,7 +3806,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: keyboard-&-mouse_sheet_default_183
+      name: S_UI_Input_Escape
       rect:
         serializedVersion: 2
         x: 832
@@ -5769,6 +5782,7 @@ TextureImporter:
       S_UI_Input_3: -1794398988
       S_UI_Input_A: -983255006
       S_UI_Input_D: 1696196484
+      S_UI_Input_Escape: -1190864821
       S_UI_Input_MouseMove: 1729629976
       S_UI_Input_R: 505500274
       S_UI_Input_S: 1710746485
@@ -5868,7 +5882,6 @@ TextureImporter:
       keyboard-&-mouse_sheet_default_180: -1676546194
       keyboard-&-mouse_sheet_default_181: 935242119
       keyboard-&-mouse_sheet_default_182: 1805592579
-      keyboard-&-mouse_sheet_default_183: -1190864821
       keyboard-&-mouse_sheet_default_184: -37475476
       keyboard-&-mouse_sheet_default_185: -702614604
       keyboard-&-mouse_sheet_default_186: 697975075

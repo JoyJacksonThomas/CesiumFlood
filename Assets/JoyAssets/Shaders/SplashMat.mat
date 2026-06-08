@@ -131,7 +131,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WaterLevel: 0.93
+    - _WaterLevel: 0
     - _WaveAmplitude: 2
     - _WaveAmplitude_1: 1
     - _WaveAmplitude_2: 0.5
