@@ -148,7 +148,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6e3477f140900ec47b950256e613eb89, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 6e3477f140900ec47b950256e613eb89, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0
@@ -244,7 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 369757485828717853}
-  - component: {fileID: 630113611436993321}
+  - component: {fileID: 4712761818942045754}
   m_Layer: 8
   m_Name: CameraBase
   m_TagString: Untagged
@@ -268,7 +268,7 @@ Transform:
   - {fileID: 5618725975589148534}
   m_Father: {fileID: 7862907191639968763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &630113611436993321
+--- !u!114 &4712761818942045754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,30 +277,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2551321308716144189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e520e1656e3af6746b7147e0f18bed61, type: 3}
+  m_Script: {fileID: 11500000, guid: cb0f17bc571363843b46d4becc60b43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 7862907191639968763}
-  sensitivity: 8
-  rotationX: 0
-  rotationY: 0
-  rotationZ: 0
-  mCamera: {fileID: 2827518138903284096}
-  Offset: {x: 0, y: 5, z: 0}
-  verticalOffsetRange: 0
-  camLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  rayLength: 0
-  maxOffSet_Z: -19
-  minOffSet_Z: -7
-  zOffset: 0
-  maxOffSet_Y: 0
-  minOffSet_Y: 0
-  yOffset: 0
-  DistanceToWalls: 0
-  maxDeltaPosition: 0
-  maxDeltaRotation: 0
+  target: {fileID: 0}
+  mCamera: {fileID: 0}
+  pivotHeight: 5
+  distance: 22
+  sensitivity: 2
+  minPitch: -65
+  maxPitch: 90
+  followSharpness: 20
 --- !u!1 &5395327000644487685
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,11 +374,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BoatMovement: {fileID: 6364862029607641327}
   m_WalkMovement: {fileID: 722883465198524600}
-  m_CameraController: {fileID: 630113611436993321}
+  m_CameraController: {fileID: 0}
   m_DroneMovement: {fileID: 7132194691934737303}
   m_Anchor: {fileID: 5442474224457012603}
   m_WaterAnchor: {fileID: 0}
   movementType: 2
+  surfaceCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  yOffset: 10
+  m_InputDisplay: {fileID: 0}
 --- !u!54 &2667733089693195576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -713,11 +705,6 @@ PrefabInstance:
       propertyPath: MainCamera
       value: 
       objectReference: {fileID: 5618725975589148534}
-    - target: {fileID: 7799683241575520779, guid: 16ed495e23c631e46a60c7665afa8e76,
-        type: 3}
-      propertyPath: CameraController
-      value: 
-      objectReference: {fileID: 630113611436993321}
     m_RemovedComponents:
     - {fileID: 920739563260499557, guid: 16ed495e23c631e46a60c7665afa8e76, type: 3}
     m_RemovedGameObjects: []

@@ -284,6 +284,7 @@ MonoBehaviour:
   configMenu: {fileID: 7964825581052605125}
   mainMenu: {fileID: 5841218599547076430}
   creditsMenu: {fileID: 2010775030962870066}
+  settingsMenu: {fileID: 1737750035731415472}
   currentAddressDisplay: {fileID: 3441179247247228596}
 --- !u!114 &1272245659413897676
 MonoBehaviour:
@@ -965,6 +966,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd420743399d624b9c119b554cbe610, type: 3}
+--- !u!1 &1737750035731415472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6667566292000370431, guid: 5fd420743399d624b9c119b554cbe610,
+    type: 3}
+  m_PrefabInstance: {fileID: 4943349595145858895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2010775030962870066 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6880932301609973885, guid: 5fd420743399d624b9c119b554cbe610,

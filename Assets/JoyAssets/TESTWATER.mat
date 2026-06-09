@@ -148,7 +148,7 @@ Material:
     - _RefractionSpeed: 0.05
     - _RefractionStrength: 1
     - _RippleStrength: -0.4
-    - _Smoothness: 1
+    - _Smoothness: 0.33
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -163,19 +163,19 @@ Material:
     - _WaveFrequency_2: 0.4
     - _WaveScale: 0.2
     - _WaveSpeed: 1
-    - _WaveSpeed_1: -1
+    - _WaveSpeed_1: -1.111
     - _WaveSpeed_2: -2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepWater: {r: 0.07725924, g: 0.22074074, b: 0.29799998, a: 0.8509804}
+    - _DeepWater: {r: 0.25568625, g: 0.6392157, b: 0.6156657, a: 0.69803923}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.13333334}
     - _FoamDirection: {r: 1, g: 1, b: 0, a: 0}
-    - _ShallowWater: {r: 0, g: 0.026579533, b: 0.23921564, a: 0.9882353}
+    - _ShallowWater: {r: 0.25568625, g: 0.6392157, b: 0.6156657, a: 0.69803923}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.036712352, g: 0.26026812, b: 0.31132078, a: 1}
+    - _SpecularColor: {r: 0.11578947, g: 0.57263154, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -18,10 +18,10 @@ public class CF_PlayerController : MonoBehaviour {
     private BoatMovement m_BoatMovement;
 
     [SerializeField]
-    private TPS_Player_NEW m_WalkMovement;
+    private WalkMovement m_WalkMovement;
 
     [SerializeField]
-    private TPS_CameraController m_CameraController;
+    private CF_CameraController m_CameraController;
 
     [SerializeField]
     private DroneMovement m_DroneMovement;
@@ -101,6 +101,11 @@ public class CF_PlayerController : MonoBehaviour {
         Vector2 input = value.Get<Vector2>();
         if (input.magnitude > 100f) {
             // Ignore large input values that may be caused by glitches or unintended input
+            return;
+        }
+
+        if (m_CameraController == null) {
+            Debug.LogError("CF_PlayerController: m_CameraController is not assigned.", this);
             return;
         }
 
@@ -262,7 +267,11 @@ public class CF_PlayerController : MonoBehaviour {
     private IEnumerator ResetOffsets() {
         yield return new WaitForSeconds(0.2f);
         transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
-        m_CameraController.transform.position = new Vector3(0f, 0f, 0f);
+        if (m_CameraController != null) {
+            m_CameraController.transform.position = new Vector3(0f, 0f, 0f);
+        } else {
+            Debug.LogError("CF_PlayerController: m_CameraController is not assigned.", this);
+        }
         if (WaterLevelManager.Instance != null) {
             WaterLevelManager.Instance.UpdateWaterLevel();
         }

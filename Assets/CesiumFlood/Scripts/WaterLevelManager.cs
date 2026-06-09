@@ -1,5 +1,6 @@
 using CesiumForUnity;
 using GeoidHeightsDotNet;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class WaterLevelManager : MonoSingleton<WaterLevelManager> {
@@ -17,9 +18,10 @@ public class WaterLevelManager : MonoSingleton<WaterLevelManager> {
             materialsWithWaterLevel[i].SetFloat("_WaterLevel", waterLevel);
         }
 
-        double latitude = waterPlaneAnchor.longitudeLatitudeHeight.y;
         double longitude = waterPlaneAnchor.longitudeLatitudeHeight.x;
-        waterPlaneAnchor.height = waterHeightOffset + CalcUndulation(latitude, longitude);
+        double latitude = waterPlaneAnchor.longitudeLatitudeHeight.y;
+        double height = waterHeightOffset + CalcUndulation(latitude, longitude);
+        waterPlaneAnchor.longitudeLatitudeHeight = new double3(longitude, latitude, height);
     }
 
     private static double CalcUndulation(double latitude, double longitude) {

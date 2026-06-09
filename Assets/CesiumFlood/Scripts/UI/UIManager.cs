@@ -8,6 +8,12 @@ namespace CesiumFlood {
         Menu
     }
 
+    public enum MainMenuPanel {
+        Root,
+        Credits,
+        Settings
+    }
+
     [RequireComponent(typeof(AddressRequester))]
     public class UIManager : MonoSingleton<UIManager> {
         [SerializeField]
@@ -20,12 +26,17 @@ namespace CesiumFlood {
         private GameObject creditsMenu;
 
         [SerializeField]
+        private GameObject settingsMenu;
+
+        [SerializeField]
         private GameObject currentAddressDisplay;
 
 
         private AddressRequester addressRequester;
 
         private UIMenuState currentMenuState = UIMenuState.Menu;
+
+        private MainMenuPanel currentPanel = MainMenuPanel.Root;
 
         private PlayerInput m_PlayerInput;
 
@@ -53,15 +64,27 @@ namespace CesiumFlood {
         }
 
         public void ToggleCreditsMenu() {
+            SetPanel(MainMenuPanel.Credits);
+        }
+
+        public void ToggleSettingsMenu() {
+            SetPanel(MainMenuPanel.Settings);
+        }
+
+        private void SetPanel(MainMenuPanel panel) {
             if (currentMenuState != UIMenuState.Menu) return;
-            creditsMenu.SetActive(!creditsMenu.activeSelf);
+            currentPanel = currentPanel == panel ? MainMenuPanel.Root : panel;
+            creditsMenu.SetActive(currentPanel == MainMenuPanel.Credits);
+            settingsMenu.SetActive(currentPanel == MainMenuPanel.Settings);
         }
 
         private void SetState(UIMenuState state) {
             currentMenuState = state;
+            currentPanel = MainMenuPanel.Root;
             configMenu.SetActive(state == UIMenuState.Config);
             mainMenu.SetActive(state == UIMenuState.Menu);
             creditsMenu.SetActive(false);
+            settingsMenu.SetActive(false);
             currentAddressDisplay.SetActive(state == UIMenuState.None || state == UIMenuState.Config);
 
 

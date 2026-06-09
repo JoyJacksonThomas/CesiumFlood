@@ -46,6 +46,10 @@ public class DroneMovement : MonoBehaviour {
     [Tooltip("Controls how rapidly the tilt effect responds to speed changes")]
     private float tiltRate = 0.3f;
 
+    [SerializeField]
+    [Tooltip("Smoothing time for the body yawing toward the look direction. Lower = snappier.")]
+    private float rotationSmoothTime = 0.12f;
+
     // Speed control variables
     private float currentSpeed;
 
@@ -54,17 +58,23 @@ public class DroneMovement : MonoBehaviour {
 
     private float rotationTarget;
     private float targetSpeed;
+    private float yawVelocity;
 
 
-    private void FixedUpdate() {
-        if (!(Mathf.Abs(transform.parent.eulerAngles.y - rotationTarget) < 0.01f)) {
-            float newYRot = Mathf.LerpAngle(transform.parent.eulerAngles.y, rotationTarget, 0.5f);
-            transform.parent.eulerAngles =
-                new Vector3(transform.parent.eulerAngles.x, newYRot, transform.parent.eulerAngles.z);
-        }
-
+    // Driven in Update (not FixedUpdate) so rotation/movement update every rendered frame instead
+    // of stepping at the fixed physics rate, which is what made the body visibly catch/stutter.
+    private void Update() {
+        HandleRotation();
         HandleMovement();
         HandleVisuals();
+    }
+
+    private void HandleRotation() {
+        // Smoothly yaw the rig toward the camera's look direction. SmoothDampAngle is frame-rate
+        // independent and eases in/out, so the body follows the camera without snapping.
+        Vector3 euler = transform.parent.eulerAngles;
+        euler.y = Mathf.SmoothDampAngle(euler.y, rotationTarget, ref yawVelocity, rotationSmoothTime);
+        transform.parent.eulerAngles = euler;
     }
 
     private void HandleVisuals() {
