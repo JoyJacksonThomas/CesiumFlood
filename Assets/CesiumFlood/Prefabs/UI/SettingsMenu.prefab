@@ -1518,23 +1518,6 @@ PrefabInstance:
       propertyPath: m_text
       value: Close
       objectReference: {fileID: 0}
-    - target: {fileID: 1265286068571112065, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 43.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1265286068571112065, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 41d10f0508c0baf4c8a0b8c6484225ff,
-        type: 2}
-    - target: {fileID: 1265286068571112065, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 1553473901519571282, guid: 41d10f0508c0baf4c8a0b8c6484225ff,
-        type: 2}
     - target: {fileID: 1776912068540544350, guid: 84b0dcbd12fba574e8596d4d798f5d1c,
         type: 3}
       propertyPath: m_AnchoredPosition.y

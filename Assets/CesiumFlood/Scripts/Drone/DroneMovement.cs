@@ -8,10 +8,6 @@ public class DroneMovement : MonoBehaviour {
     private Transform modelTransform;
 
     [SerializeField]
-    [Tooltip("Sensitivity of mouse rotation")]
-    private float mouseSense = 1.8f;
-
-    [SerializeField]
     [Tooltip("Camera movement speed")]
     private float movementSpeed = 10f;
 

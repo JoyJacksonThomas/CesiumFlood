@@ -576,11 +576,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 1954667251016257652, guid: 5fd420743399d624b9c119b554cbe610,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 38.6
-      objectReference: {fileID: 0}
     - target: {fileID: 2004804015008982314, guid: 5fd420743399d624b9c119b554cbe610,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -615,11 +610,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2157584038707578437, guid: 5fd420743399d624b9c119b554cbe610,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 43.7
       objectReference: {fileID: 0}
     - target: {fileID: 2281185397570473137, guid: 5fd420743399d624b9c119b554cbe610,
         type: 3}
@@ -718,11 +708,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3436185808495947455, guid: 5fd420743399d624b9c119b554cbe610,
         type: 3}
-      propertyPath: m_fontSize
-      value: 43.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3436185808495947455, guid: 5fd420743399d624b9c119b554cbe610,
-        type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 41d10f0508c0baf4c8a0b8c6484225ff,
@@ -767,11 +752,6 @@ PrefabInstance:
         type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5345289173624457480, guid: 5fd420743399d624b9c119b554cbe610,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 43.7
       objectReference: {fileID: 0}
     - target: {fileID: 5345289173624457480, guid: 5fd420743399d624b9c119b554cbe610,
         type: 3}
